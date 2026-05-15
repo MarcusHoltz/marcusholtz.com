@@ -35,7 +35,7 @@ via a throwaway Docker container.
 
 Direct dependencies updated:
   astro  tailwindcss  @tailwindcss/vite  @astrojs/sitemap  @astrojs/check
-  typescript  eslint  @typescript-eslint/parser
+  rss-parser  typescript  eslint  @typescript-eslint/parser
   eslint-plugin-astro  @types/node
 
 Options:
@@ -85,7 +85,7 @@ if [ "$DISCARD" -eq 1 ] && [ "$LOCK_ONLY" -eq 1 ]; then
 fi
 
 # ── All direct dependencies ───────────────────────────────────────────────────
-PKGS="astro tailwindcss @tailwindcss/vite @astrojs/sitemap @astrojs/check typescript eslint @typescript-eslint/parser eslint-plugin-astro @types/node"
+PKGS="astro tailwindcss @tailwindcss/vite @astrojs/sitemap @astrojs/check rss-parser typescript eslint @typescript-eslint/parser eslint-plugin-astro @types/node"
 
 # ── Build the pnpm command string ─────────────────────────────────────────────
 if [ "$LOCK_ONLY" -eq 1 ]; then
@@ -123,6 +123,7 @@ get_version() {
   pkg="$1"
   case "$pkg" in
     @*)
+      # Scoped: strip leading @, escape / for grep, then restore
       grep "^  '${pkg}@" pnpm-lock.yaml 2>/dev/null \
         | head -1 \
         | sed "s|^  '${pkg}@||;s|':.*||"
