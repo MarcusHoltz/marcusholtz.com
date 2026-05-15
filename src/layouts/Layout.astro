@@ -11,7 +11,7 @@ interface Props {
 
 // BASE_URL reflects astro.config.mjs `base` (set via BASE_PATH env var).
 // Prepend it to every public/ asset path so the site works when deployed to a sub-directory.
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const { title = siteData.title, description = siteData.description, ogImage } = Astro.props;
 
 const siteOrigin = Astro.site?.origin ?? personalData.url;
