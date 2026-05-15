@@ -11,17 +11,8 @@
  * Remote URLs and data URIs are returned unchanged.
  * When BASE_URL is "/" (root deployment) the path is returned unchanged.
  */
-/* TEST FEATURE - Astro 6 doesn't guarantee that when BASE_PATH is set without a trailing slash. '/foo' + 'images/...' = '/fooimages/...'.
- * The fix: normalize BASE_URL to always end with / before concatenating.
- */
-export function withBase(path: string): string {
-  if (!path || /^(https?:\/\/|\/\/|data:)/.test(path)) return path;
-  return import.meta.env.BASE_URL + path.replace(/^\//, '');
-}
-/*
 export function withBase(path: string): string {
   if (!path || /^(https?:\/\/|\/\/|data:)/.test(path)) return path;
   const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   return base + path.replace(/^\//, '');
 }
-*/
