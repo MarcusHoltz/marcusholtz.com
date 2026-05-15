@@ -1,6 +1,9 @@
 # Dependencies — Docker installs these fresh via npm ci
 node_modules/
 
+# pnpm
+.pnpm-store
+
 # Build output — generated during the Docker build, not copied in
 dist/
 output/
