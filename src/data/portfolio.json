@@ -1,34 +1,106 @@
 [
   {
-    "title": "Brand Identity & Visual System",
-    "category": "Branding",
-    "description": "A complete brand overhaul for a growing company — logo, typography, color system, and a style guide built to scale. Designed for flexibility without sacrificing cohesion.",
+    "title": "Clearwave",
+    "category": "Technology",
+    "description": "Technology company website with a full frontend redesign and custom backend development.",
     "images": [
-      "/images/portfolio/project-1a.jpg",
-      "/images/portfolio/project-1b.jpg",
-      "/images/portfolio/project-1c.jpg"
+      "/images/portfolio/clearwave-1.png",
+      "/images/portfolio/clearwave-2.png",
+      "/images/portfolio/clearwave-3.png"
     ],
-    "slides": ["Brand Overview", "Style Guide Spread", "Product Shot"]
+    "slides": ["Original Frontend", "Revised Frontend", "Backend"]
   },
   {
-    "title": "Interactive Web Experience",
-    "category": "Web Design",
-    "description": "A custom-built site blending editorial layout with smooth scroll interactions and motion. Designed in Figma, built in code, and optimized down to the frame.",
-    "images": [
-      "/images/portfolio/project-2a.jpg",
-      "/images/portfolio/project-2b.jpg",
-      "/images/portfolio/project-2c.jpg"
-    ],
-    "slides": ["Homepage Figma Design", "Homepage Complete", "Second Phase app page"]
+    "title": "Roberts Law",
+    "category": "Legal",
+    "description": "Law firm website with SEO optimization and a professional redesign that increased organic traffic.",
+    "images": ["/images/portfolio/roberts-1.png", "/images/portfolio/roberts-2.png"],
+    "slides": ["Homepage", "SEO Enhanced Site"]
   },
   {
-    "title": "Short Film & Motion Piece",
-    "category": "Video",
-    "description": "A two-minute visual essay combining original footage, 3D elements, and motion design. Shot, edited, and scored independently — start to finish in three weeks.",
+    "title": "Eclipse Tourism",
+    "category": "Tourism",
+    "description": "Interactive tourism event map and homepage for a regional eclipse event, built for high traffic and real-time updates.",
     "images": [
-      "/images/portfolio/project-3a.jpg",
-      "/images/portfolio/project-3b.jpg"
+      "/images/portfolio/eclipse-1.png",
+      "/images/portfolio/eclipse-2a.png",
+      "/images/portfolio/eclipse-2b.gif"
     ],
-    "slides": ["Opening Scene", "Modeling Sequence", "Developing Music for Documentary"]
+    "slides": ["Homepage", "Interactive Event Map", "Map Demo"]
+  },
+  {
+    "title": "Giant City Lodge",
+    "category": "Tourism",
+    "description": "Lodge and restaurant website with a full menu integration and responsive design for tourism visitors.",
+    "images": ["/images/portfolio/giantcity-1.png", "/images/portfolio/giantcity-2.png"],
+    "slides": ["Homepage", "Menu"]
+  },
+  {
+    "title": "City of Carterville",
+    "category": "Municipalities",
+    "description": "Municipal government website rebuilt for accessibility, ADA compliance, and ease of content management.",
+    "images": ["/images/portfolio/carterville-1.png", "/images/portfolio/carterville-2.png"],
+    "slides": ["Homepage", "Subpage"]
+  },
+  {
+    "title": "Carterville Parks & Rec",
+    "category": "Municipalities",
+    "description": "Parks and recreation department site with program listings, aquatics schedules, and adult recreation pages.",
+    "images": [
+      "/images/portfolio/parks-1.png",
+      "/images/portfolio/parks-2.png",
+      "/images/portfolio/parks-3.png"
+    ],
+    "slides": ["Homepage", "Aquatics", "Adult Recreation"]
+  },
+  {
+    "title": "Warpath Industries",
+    "category": "Manufacturing",
+    "description": "Manufacturing company website showcasing capabilities, product lines, and company identity.",
+    "images": [
+      "/images/portfolio/warpath-1a.gif",
+      "/images/portfolio/warpath-1b.png",
+      "/images/portfolio/warpath-2.png"
+    ],
+    "slides": ["Homepage Intro", "Homepage", "Capabilities"]
+  },
+  {
+    "title": "Level 7 Motorsports",
+    "category": "Manufacturing",
+    "description": "Motorsports lifestyle brand with a dynamic homepage, editorial content, and single post templates.",
+    "images": [
+      "/images/portfolio/motorsports-1.png",
+      "/images/portfolio/motorsports-2.png",
+      "/images/portfolio/motorsports-3.png"
+    ],
+    "slides": ["Homepage", "Lifestyle", "Single Post"]
+  },
+  {
+    "title": "Images Framing",
+    "category": "Retail",
+    "description": "Custom framing shop website with a services showcase and clean product-focused layout.",
+    "images": ["/images/portfolio/imagesframing-1.png", "/images/portfolio/imagesframing-2.png"],
+    "slides": ["Homepage", "Services"]
+  },
+  {
+    "title": "Chef Clash",
+    "category": "Non-Profits",
+    "description": "Non-profit donor platform for a charity cooking competition, with online donations and recipient profiles.",
+    "images": ["/images/portfolio/chefclash-1.png", "/images/portfolio/chefclash-2.png"],
+    "slides": ["Homepage", "Donor Recipient"]
+  },
+  {
+    "title": "Boys & Girls Club",
+    "category": "Non-Profits",
+    "description": "Boys & Girls Club chapter website with membership signup, program pages, and community-focused design.",
+    "images": ["/images/portfolio/boysgirls-1.png", "/images/portfolio/boysgirls-2.png"],
+    "slides": ["Homepage", "Membership"]
+  },
+  {
+    "title": "SEO Performance Report",
+    "category": "SEO",
+    "description": "Comprehensive SEO audit and reporting dashboard delivered as part of a full website overhaul engagement.",
+    "images": ["/images/portfolio/website-1.png"],
+    "slides": ["SEO Report"]
   }
 ]

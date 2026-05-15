@@ -3,26 +3,26 @@
     {
       "key": "sysadmin",
       "icon": "server-stack",
-      "title": "Design & Art Direction",
-      "description": "Visual identity, layout, typography, and the aesthetic decisions that make people stop and look twice. Whether print or screen, the goal is the same — work that holds up."
+      "title": "System Administrator",
+      "description": "Technical troubleshooter and server magician who maintains operations and keeps infrastructure running at peak performance."
     },
     {
       "key": "webdev",
       "icon": "code-bracket-square",
-      "title": "Web Design & Development",
-      "description": "From wireframe to deployment — building sites and apps that look considered, perform well, and give visitors exactly what they came for."
+      "title": "Web Development",
+      "description": "High-quality development of really neato sites at the professional level — from architecture through deployment."
     },
     {
       "key": "freelance",
       "icon": "user-circle",
-      "title": "Creative Freelance",
-      "description": "Independent project work in photography, video, 3D, illustration, or wherever the brief leads. Direct to work with, flexible, and invested in the outcome."
+      "title": "Client Support",
+      "description": "Professional development of custom systems tailored precisely to the needs of my clients, delivered on time."
     },
     {
       "key": "leadership",
       "icon": "users",
-      "title": "Collaboration & Direction",
-      "description": "Working alongside teams, clients, and stakeholders to take a project from idea to shipped — clear communication, honest timelines, and work that actually gets done."
+      "title": "Leadership",
+      "description": "Inspire, guide, and empower others towards shared goals and success — from solo teams to cross-functional groups."
     }
   ]
 }

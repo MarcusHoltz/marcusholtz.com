@@ -2,86 +2,981 @@
   "layout": "grid",
   "items": [
     {
-      "title": "Open Source Portfolio Template",
+      "title": "Self-Hosted GitLab with CI Runners & TLS",
       "featured": true,
       "resume": true,
-      "company": "Community",
-      "category": "webdev",
-      "description": "The template you're looking at right now. Built with Astro, fully data-driven, and designed to be claimed by anyone. Fork it, fill it, ship it. All placeholder content is waiting for yours.",
-      "tags": ["Astro", "TypeScript", "Tailwind CSS", "Open Source", "Template"],
-      "icon": "command-line",
-      "sliderImage": "/images/projects/use-astro2.jpg",
-      "sliderOrder": 1,
-      "backgroundImage": "/images/projects/use-astro3.jpg",
-      "images": [
-        "/images/projects/use-astro1.jpg",
-        "/images/projects/use-astro2.jpg",
-        "/images/projects/use-astro3.jpg"
+      "company": "DevOps Infrastructure",
+      "category": "devops",
+      "description": "Full GitLab Omnibus deployment with registered CI runners and automated TLS certificate management. Provides a private, git controlled CI/CD platform. Full featured GitLab install ready with demonstration project.",
+      "tags": [
+        "GitLab",
+        "CI/CD",
+        "TLS",
+        "Traefik",
+        "Docker"
       ],
-      "link": "",
-      "colorIcon": "devicon:astro",
-      "githubRepo": "portfolio-template"
+      "icon": "arrow-path",
+      "backgroundImage": "/images/projects/gitlab-runners.jpg",
+      "images": [
+        "/images/projects/gitlab-runners.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/docker-gitlab-runner",
+      "colorIcon": "/images/icons/dashboard-icons/gitlab.png",
+      "githubRepo": "docker-gitlab-runner"
     },
     {
-      "title": "3D Environment Study",
+      "title": "Auto-Updating Resume Pipeline",
       "featured": true,
       "resume": true,
-      "company": "Personal Work",
-      "category": "blender",
-      "description": "A series of Blender scenes exploring lighting, texture, and atmosphere — no narrative, just craft. Rendered in Cycles, post-processed in Photoshop, shared as a study in patience and iteration.",
-      "tags": ["Blender", "3D Modeling", "Lighting", "Cycles Render", "Photoshop"],
-      "icon": "cpu-chip",
-      "sliderImage": "/images/projects/blender-mockup2.jpg",
-      "sliderOrder": 2,
-      "backgroundImage": "/images/projects/blender-mockup1.jpg",
-      "images": [
-        "/images/projects/blender-mockup1.jpg",
-        "/images/projects/blender-mockup2.jpg",
-        "/images/projects/blender-mockup3.jpg"
+      "company": "Personal Project",
+      "category": "devops",
+      "description": "CI/CD pipeline that rebuilds and publishes a polished resume every single day via GitHub Actions. Containerized LaTeX rendering produces a versioned PDF artifact — the pipeline itself is the portfolio piece.",
+      "tags": [
+        "GitHub Actions",
+        "Docker",
+        "CI/CD",
+        "LaTeX",
+        "Pandoc"
       ],
-      "link": "",
-      "colorIcon": "devicon:blender",
-      "githubRepo": ""
-    },
-    {
-      "title": "Personal Design System",
-      "featured": true,
-      "company": "Side Project",
-      "category": "design",
-      "description": "A living component library built for personal and freelance use. Design tokens, reusable components, and documentation that travel from project to project — no starting from scratch every time.",
-      "tags": ["Figma", "CSS", "TypeScript", "Design Systems", "Component Library"],
       "icon": "document-text",
-      "sliderImage": "/images/projects/design-library3.jpg",
-      "sliderOrder": 4,
-      "backgroundImage": "/images/projects/design-library2.jpg",
+      "sliderImage": "/images/projects/resume-pipeline.jpg",
+      "sliderOrder": 7,
+      "backgroundImage": "/images/projects/resume-pipeline.jpg",
       "images": [
-        "/images/projects/design-library1.jpg",
-        "/images/projects/design-library2.jpg",
-        "/images/projects/design-library3.jpg"
+        "/images/projects/resume-pipeline.jpg"
       ],
-      "link": "",
-      "colorIcon": "devicon:figma",
-      "githubRepo": "design-system"
+      "link": "https://github.com/MarcusHoltz/resume-generator",
+      "colorIcon": "/images/icons/dashboard-icons/github.png",
+      "githubRepo": "resume-generator"
     },
     {
-      "title": "Photography Workflow App",
+      "title": "Authentik SSO with Traefik ForwardAuth",
+      "featured": true,
       "resume": true,
-      "company": "Side Project",
-      "category": "appdev",
-      "description": "A lightweight local web app for managing shoot intake, selects, and client delivery — replacing a patchwork of folders, spreadsheets, and emails with a single tool built for the way I work.",
-      "tags": ["React", "SQLite", "Photography", "Workflow", "Node.js"],
-      "icon": "eye",
-      "sliderImage": "/images/projects/web-app2.jpg",
-      "sliderOrder": 3,
-      "backgroundImage": "/images/projects/web-app3.jpg",
-      "images": [
-        "/images/projects/web-app1.jpg",
-        "/images/projects/web-app2.jpg",
-        "/images/projects/web-app3.jpg"
+      "company": "Security Infrastructure",
+      "category": "security",
+      "description": "Full SSO layer using Authentik on a Docker MacVLAN bridge, enabling Traefik to delegate auth via ForwardAuth without network collisions. Supports OAuth token exchange across isolated container networks.",
+      "tags": [
+        "Authentik",
+        "Traefik",
+        "OAuth",
+        "Docker",
+        "MacVLAN"
       ],
-      "link": "",
-      "colorIcon": "devicon:react",
-      "githubRepo": "photo-workflow"
+      "icon": "shield-check",
+      "backgroundImage": "/images/projects/authentik-sso.jpg",
+      "images": [
+        "/images/projects/authentik-sso.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/Authentik-Traefik-MacVLAN",
+      "colorIcon": "/images/icons/dashboard-icons/authentik.png",
+      "githubRepo": "Authentik-Traefik-MacVLAN"
+    },
+    {
+      "title": "After-Hours Network Lockdown — WiFi, Firewall & SSO on a Schedule",
+      "featured": true,
+      "resume": true,
+      "company": "Home Lab / Automation",
+      "category": "devops",
+      "description": "Automated network curfew: OpenWRT kills the WiFi radio, OPNsense firewall rules lock down VLANs, and Authentik policies block app logins — on a schedule. Includes: daily SSID rotation with the password hidden in a math puzzle.",
+      "tags": [
+        "OpenWRT",
+        "OPNsense",
+        "Authentik",
+        "Cron",
+        "Network Automation"
+      ],
+      "icon": "clock",
+      "sliderImage": "/images/projects/turnoffservices--sepia-your-services.gif",
+      "sliderOrder": 17,
+      "backgroundImage": "/images/projects/scheduled-network-controls.jpg",
+      "images": [
+        "/images/projects/turnoffservices--sepia-your-services.gif"
+      ],
+      "link": "https://blog.holtzweb.com/posts/turn-network-services-off-after-business-hours/",
+      "colorIcon": "/images/icons/dashboard-icons/opnsense.png"
+    },
+    {
+      "title": "Astro Portfolio Theme",
+      "featured": true,
+      "company": "Personal Project",
+      "category": "web",
+      "description": "This website. Built on Astro and Tailwind CSS. Content is in JSON files — multi-stage Docker CI, and automatic one-command deploy to GitHub Pages, GitLab, Cloudflare, or self-hosted VPS.",
+      "tags": [
+        "Astro",
+        "TypeScript",
+        "Tailwind CSS",
+        "Docker",
+        "Static Site"
+      ],
+      "icon": "code-bracket",
+      "sliderImage": "/images/projects/astro-portfolio-theme.jpg",
+      "sliderOrder": 10,
+      "backgroundImage": "/images/projects/astro-portfolio-theme.jpg",
+      "images": [
+        "/images/projects/astro-portfolio-theme.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/astro-portfolio-theme",
+      "colorIcon": "mdi:rocket-launch-outline",
+      "githubRepo": "astro-portfolio-theme"
+    },
+    {
+      "title": "Docker MacVLAN Traefik Analytics",
+      "featured": true,
+      "company": "Monitoring Infrastructure",
+      "category": "infrastructure",
+      "description": "Docker MacVLAN network that gives Traefik direct physical interface access with real source IPs. Feeds un-NAT'd access logs through Promtail → Loki → Grafana for full visitor analytics without exposing the host network.",
+      "tags": [
+        "MacVLAN",
+        "Traefik",
+        "Grafana",
+        "Loki",
+        "Docker"
+      ],
+      "icon": "chart-bar-square",
+      "sliderImage": "/images/projects/traefik_docker_macvlan_10--grafana-slider.gif",
+      "sliderOrder": 16,
+      "backgroundImage": "/images/projects/macvlan-traefik.jpg",
+      "images": [
+        "/images/projects/traefik_docker_macvlan_10--grafana-slider.gif"
+      ],
+      "link": "https://github.com/MarcusHoltz/Traefik-MacVLAN",
+      "colorIcon": "/images/icons/dashboard-icons/traefik.png",
+      "githubRepo": "Traefik-MacVLAN"
+    },
+    {
+      "title": "Cloudflare Email Routing & Aliasing",
+      "featured": true,
+      "company": "Privacy Infrastructure",
+      "category": "devops",
+      "description": "Privacy-first email alias system using Cloudflare Email Routing. Infinite unique inbound aliases route to a single private mailbox — no third-party dependency, no data leakage, fully automated.",
+      "tags": [
+        "Cloudflare",
+        "Email",
+        "Privacy",
+        "DNS",
+        "Automation"
+      ],
+      "icon": "cloud",
+      "backgroundImage": "/images/projects/cloudflare-email.jpg",
+      "images": [
+        "/images/projects/cloudflare-email.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/unlimited-email-forwarding-address-aliases-using-cloudflare/",
+      "colorIcon": "/images/icons/dashboard-icons/cloudflare.png"
+    },
+    {
+      "title": "ZFS Storage & Snapshot Architecture",
+      "featured": true,
+      "company": "Storage Engineering",
+      "category": "infrastructure",
+      "description": "Optimal ZFS datastore design for Proxmox — pool layout, compression, deduplication, snapshot scheduling, and cluster-friendly dataset naming conventions that survive live migrations without I/O storms.",
+      "tags": [
+        "ZFS",
+        "Proxmox",
+        "Storage",
+        "Snapshots",
+        "Linux"
+      ],
+      "icon": "server-stack",
+      "backgroundImage": "/images/projects/zfs-storage.jpg",
+      "images": [
+        "/images/projects/zfs-storage.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/proxmox-zfs-for-storage/",
+      "colorIcon": "/images/icons/dashboard-icons/truenas.png"
+    },
+    {
+      "title": "WAF Smoke Test Script",
+      "featured": true,
+      "company": "Security / DevOps",
+      "category": "security",
+      "description": "Lightweight shell script that tests Web Application Firewall effectiveness and fingerprinting by firing a battery of attack patterns — SQLi, XSS, path traversal, and more — to verify blocking rules are actually working.",
+      "tags": [
+        "WAF",
+        "Security Testing",
+        "Bash",
+        "OWASP",
+        "DevOps"
+      ],
+      "icon": "shield-check",
+      "backgroundImage": "/images/projects/waf-smoke-test.jpg",
+      "images": [
+        "/images/projects/waf-smoke-test.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/waf-smoke-test.sh",
+      "colorIcon": "/images/icons/dashboard-icons/nginx.png",
+      "githubRepo": "waf-smoke-test.sh"
+    },
+    {
+      "title": "HAProxy Proxy Protocol to Traefik",
+      "featured": true,
+      "company": "Network Engineering",
+      "category": "infrastructure",
+      "description": "Configures HAProxy on OPNsense to forward real client IPs through multiple proxy layers to Traefik using Proxy Protocol v2 — domain-based routing with full client metadata preserved end-to-end.",
+      "tags": [
+        "HAProxy",
+        "Traefik",
+        "OPNsense",
+        "Proxy Protocol",
+        "Docker"
+      ],
+      "icon": "arrow-path",
+      "backgroundImage": "/images/projects/haproxy-proxy-protocol.jpg",
+      "images": [
+        "/images/projects/haproxy-proxy-protocol.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/HAProxy-Proxy-Protocol-on-OPNSense-to-Traefik/",
+      "colorIcon": "/images/icons/dashboard-icons/haproxy.png"
+    },
+    {
+      "title": "Clearwave — Technology Company Site",
+      "featured": true,
+      "company": "Client Project",
+      "category": "web",
+      "description": "Professional web presence for a technology sector client. Clean architecture, fast load times, conversion-focused layout — designed to communicate technical credibility and drive enterprise inquiries.",
+      "tags": [
+        "Web Design",
+        "HTML/CSS",
+        "Performance",
+        "Corporate",
+        "Client Work"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/clearwave.png",
+      "images": [
+        "/images/projects/clearwave.png"
+      ],
+      "link": "https://www.holtzweb.com/portfolio",
+      "colorIcon": "mdi:web"
+    },
+    {
+      "title": "Enterprise Security Across All Devices",
+      "featured": true,
+      "company": "Public Talk — SFS, Littleton CO",
+      "category": "talks",
+      "description": "Five-part deep dive into open-source home network security: auditing Android traffic (TrackerControl, PCAPdroid, cert-pinning bypass), per-app outbound firewalls on every OS (OpenSnitch, Little Snitch, WFC), router-level visibility with ntopng and Suricata IDS/IPS, anonymous exit strategies (Tor, I2P, XRAY), and a hardened home network stack built on OpenWRT and OPNsense.",
+      "tags": [
+        "Network Security",
+        "OPNsense",
+        "OpenWRT",
+        "Suricata",
+        "Monitoring"
+      ],
+      "icon": "eye",
+      "backgroundImage": "/images/projects/enterprise-security-in-the-home.jpg",
+      "images": [
+        "/images/projects/enterprise-security-in-the-home.jpg"
+      ],
+      "link": "https://www.holtzweb.com/talks/home_network_security/",
+      "colorIcon": "/images/icons/dashboard-icons/opnsense.png"
+    },
+    {
+      "title": "Unique Password Hash Script",
+      "company": "Personal Project",
+      "category": "security",
+      "description": "Generates repeatable, unique passwords for every service or website from a single master secret — no password manager required. Deterministic hashing means you can always reproduce the same password without storing it.",
+      "tags": [
+        "Bash",
+        "Cryptography",
+        "Privacy",
+        "Security",
+        "Scripting"
+      ],
+      "icon": "lock-closed",
+      "sliderImage": "/images/projects/password-hash.jpg",
+      "sliderOrder": 1,
+      "backgroundImage": "/images/projects/password-hash.jpg",
+      "images": [
+        "/images/projects/password-hash.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/password-hash-script",
+      "colorIcon": "/images/icons/dashboard-icons/vaultwarden.png",
+      "githubRepo": "password-hash-script"
+    },
+    {
+      "title": "Proxmox Disaster Recovery System",
+      "company": "Home Lab / Infrastructure",
+      "category": "infrastructure",
+      "description": "Enterprise-grade automated backup and disaster recovery for Proxmox clusters. ZFS snapshots managed by Sanoid, VM-level backups via cv4pve, and off-site replication to Proxmox Backup Server 2 — fully hands-off.",
+      "tags": [
+        "Proxmox",
+        "ZFS",
+        "Sanoid",
+        "PBS2",
+        "Backup Automation"
+      ],
+      "icon": "server-stack",
+      "sliderImage": "/images/projects/proxmox-dr.jpg",
+      "sliderOrder": 2,
+      "backgroundImage": "/images/projects/proxmox-dr.jpg",
+      "images": [
+        "/images/projects/proxmox-dr.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/proxmox-automatic-backups",
+      "colorIcon": "/images/icons/dashboard-icons/proxmox.png",
+      "githubRepo": "proxmox-automatic-backups"
+    },
+    {
+      "title": "Docker Secrets & Vault Management",
+      "company": "DevOps / Security",
+      "category": "devops",
+      "description": "Secure secrets injection pipeline using Docker Secrets integrated with GitLab CI. Eliminates plaintext credentials from pipelines and repositories — secrets never touch disk unencrypted.",
+      "tags": [
+        "Docker",
+        "Secrets Management",
+        "GitLab CI",
+        "Security",
+        "DevOps"
+      ],
+      "icon": "lock-closed",
+      "sliderImage": "/images/projects/docker-secrets.jpg",
+      "sliderOrder": 3,
+      "backgroundImage": "/images/projects/docker-secrets.jpg",
+      "images": [
+        "/images/projects/docker-secrets.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/setting-up-docker-secrets-in-gitlab",
+      "colorIcon": "/images/icons/dashboard-icons/docker.png",
+      "githubRepo": "setting-up-docker-secrets-in-gitlab"
+    },
+    {
+      "title": "Grafana + Alloy + Loki Observability Stack",
+      "company": "Monitoring Infrastructure",
+      "category": "infrastructure",
+      "description": "Containerized full-stack observability: Grafana for dashboards, Loki for log aggregation, and Grafana Alloy as the OpenTelemetry-compatible collector — Docker Compose deployed with persistent storage and alerting rules.",
+      "tags": [
+        "Grafana",
+        "Loki",
+        "Alloy",
+        "Docker",
+        "Observability"
+      ],
+      "icon": "eye",
+      "sliderImage": "/images/projects/observability-stack.jpg",
+      "sliderOrder": 4,
+      "backgroundImage": "/images/projects/observability-stack.jpg",
+      "images": [
+        "/images/projects/observability-stack.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/grafana-loki-alloy-homelab-monitoring-stack",
+      "colorIcon": "/images/icons/dashboard-icons/grafana.png",
+      "githubRepo": "grafana-loki-alloy-homelab-monitoring-stack"
+    },
+    {
+      "title": "Carterville — Municipal Government Site",
+      "company": "Client Project",
+      "category": "web",
+      "description": "Full municipal website for the City of Carterville. Resident-facing services portal, parks and recreation sections with aquatics and adult programming, ADA-compliant and mobile-first.",
+      "tags": [
+        "Web Design",
+        "Government",
+        "Accessibility",
+        "Responsive",
+        "Client Work"
+      ],
+      "icon": "globe-alt",
+      "sliderImage": "/images/projects/carterville-slide.jpg",
+      "sliderOrder": 5,
+      "backgroundImage": "/images/projects/carterville.png",
+      "images": [
+        "/images/projects/carterville-slide.jpg"
+      ],
+      "link": "https://www.holtzweb.com/portfolio",
+      "colorIcon": "mdi:city-variant-outline"
+    },
+    {
+      "title": "VPN over Port 53",
+      "company": "Personal Project",
+      "category": "security",
+      "description": "WireGuard VPN tunneled through port 53, iodine DNS tunnel as fallback, and CrowdSec as a behavioral DNS firewall. Bypasses carrier-level VPN blocking — nftables routes traffic, CrowdSec bans probers at the kernel level.",
+      "tags": [
+        "WireGuard",
+        "iodine",
+        "CrowdSec",
+        "nftables",
+        "DNS Tunnel"
+      ],
+      "icon": "lock-closed",
+      "sliderImage": "/images/projects/vpn-over-port53.jpg",
+      "sliderOrder": 6,
+      "backgroundImage": "/images/projects/vpn-over-port53.jpg",
+      "images": [
+        "/images/projects/vpn-over-port53.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/vpn-over-port-53",
+      "colorIcon": "/images/icons/dashboard-icons/wireguard.png",
+      "githubRepo": "vpn-over-port-53"
+    },
+    {
+      "title": "Web Confidentiality, Privacy & Security",
+      "company": "Public Talk — BLUG, Boulder CO · May 2024",
+      "category": "talks",
+      "description": "Presentation at Boulder Linux User Group on safeguarding browsing experiences — covering fingerprinting vectors, tracker evasion, DNS-over-HTTPS, compartmentalization strategies, and hardened browser profiles for everyday use.",
+      "tags": [
+        "Privacy",
+        "Security",
+        "Browser",
+        "DNS",
+        "Tracking Defense"
+      ],
+      "icon": "shield-check",
+      "sliderImage": "/images/projects/browser-presentation.png",
+      "sliderOrder": 8,
+      "backgroundImage": "/images/projects/privacy-security-talk.jpg",
+      "images": [
+        "/images/projects/browser-presentation.png"
+      ],
+      "link": "https://blog.holtzweb.com/posts/browsers-web-browser-privacy",
+      "colorIcon": "mdi:shield-account-outline"
+    },
+    {
+      "title": "Automate Custom Deployments with Cloud-init",
+      "company": "Public Talk — SFS, Littleton CO · August 2023",
+      "category": "talks",
+      "description": "Demonstrated reusable Cloud-init templates for automating fleet system deployments — provisioning users, packages, SSH keys, and services from a single declarative config at first boot.",
+      "tags": [
+        "Cloud-init",
+        "Automation",
+        "Linux",
+        "DevOps",
+        "Infrastructure"
+      ],
+      "icon": "cpu-chip",
+      "sliderImage": "/images/projects/cloud-init-talk.jpg",
+      "sliderOrder": 9,
+      "backgroundImage": "/images/projects/cloud-init-talk.jpg",
+      "images": [
+        "/images/projects/cloud-init-talk.jpg"
+      ],
+      "link": "https://gitlab.com/marcusholtz/sfs/-/blob/main/SFS-talk-cloud-init.md",
+      "colorIcon": "mdi:cloud-cog-outline"
+    },
+    {
+      "title": "Animated Boot Screen Creator for Linux",
+      "company": "Personal Project",
+      "category": "devops",
+      "description": "Converts any MP4 video to a PNG sequence and packages it as a custom Plymouth boot theme for Linux. Automates frame extraction, theme config, and initramfs integration.",
+      "tags": [
+        "Bash",
+        "Plymouth",
+        "FFmpeg",
+        "Linux",
+        "Automation"
+      ],
+      "icon": "cpu-chip",
+      "sliderImage": "/images/projects/animated-laptop-bootloader.gif",
+      "sliderOrder": 11,
+      "backgroundImage": "/images/projects/boot-screen-creator.jpg",
+      "images": [
+        "/images/projects/animated-laptop-bootloader.gif"
+      ],
+      "link": "https://github.com/MarcusHoltz/Animated-Boot-Screen-Creator-for-Linux",
+      "colorIcon": "mdi:filmstrip",
+      "githubRepo": "Animated-Boot-Screen-Creator-for-Linux"
+    },
+    {
+      "title": "Hidden VPN That Looks Like a Website",
+      "company": "Personal Project",
+      "category": "security",
+      "description": "Docker setup that deploys an HTTPS proxy disguised as a legitimate tech-company landing page. XRAY VLESS over WebSocket/TLS routes traffic through a convincing decoy site — six industry presets, browser-based terminal via ttyd, zero-SSH management.",
+      "tags": [
+        "XRAY",
+        "Nginx",
+        "Docker",
+        "TLS",
+        "Privacy"
+      ],
+      "icon": "shield-check",
+      "sliderImage": "/images/projects/hidden-vpn.jpg",
+      "sliderOrder": 12,
+      "backgroundImage": "/images/projects/hidden-vpn.jpg",
+      "images": [
+        "/images/projects/hidden-vpn.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/hidden-vpn-that-looks-like-a-website",
+      "colorIcon": "/images/icons/dashboard-icons/nginx.png",
+      "githubRepo": "hidden-vpn-that-looks-like-a-website"
+    },
+    {
+      "title": "Geofiltered IP Blocklist Aggregator",
+      "company": "Security Infrastructure",
+      "category": "security",
+      "description": "Aggregates multiple public IP blocklists into a single optimized firewall-ready list with VLSM compression and country-level geolocation filtering. Runs twice daily via GitHub Actions, compatible with OPNsense, pfSense, iptables, and OpenWRT.",
+      "tags": [
+        "Python",
+        "GeoIP",
+        "GitHub Actions",
+        "OPNsense",
+        "Firewall"
+      ],
+      "icon": "shield-check",
+      "sliderImage": "/images/projects/ip-blocklist.jpg",
+      "sliderOrder": 13,
+      "backgroundImage": "/images/projects/ip-blocklist.jpg",
+      "images": [
+        "/images/projects/ip-blocklist.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/ipblocklist-geofiltered-aggregator",
+      "colorIcon": "/images/icons/dashboard-icons/crowdsec.png",
+      "githubRepo": "ipblocklist-geofiltered-aggregator"
+    },
+    {
+      "title": "Piping Server — Ephemeral Secure Sharing",
+      "company": "Privacy / Security",
+      "category": "security",
+      "description": "Self-hosted Piping Server that creates one-time-use encrypted data channels over plain HTTP. Used for secure file transfers, encrypted chat, and remote command execution — no special client software needed.",
+      "tags": [
+        "Docker",
+        "OpenSSL",
+        "Privacy",
+        "Bash",
+        "Self-Hosted"
+      ],
+      "icon": "lock-closed",
+      "sliderImage": "/images/projects/piping-server.jpg",
+      "sliderOrder": 14,
+      "backgroundImage": "/images/projects/piping-server.jpg",
+      "images": [
+        "/images/projects/piping-server.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/piping-server-tricks-for-ephemeral-secure-sharing/",
+      "colorIcon": "mdi:pipe"
+    },
+    {
+      "title": "Tor Hidden Service with Vanity .onion",
+      "company": "Privacy / Security",
+      "category": "security",
+      "description": "Automated Docker setup to host services on the Tor network with a custom vanity .onion address — no open ports required. Uses mkp224o for address generation and X25519 client auth for private access control.",
+      "tags": [
+        "Tor",
+        "Docker",
+        "Privacy",
+        "Cryptography",
+        "Self-Hosted"
+      ],
+      "icon": "lock-closed",
+      "sliderImage": "/images/projects/1-up-tor-script-hidden-onion-service.gif",
+      "sliderOrder": 15,
+      "backgroundImage": "/images/projects/tor-hidden-service.jpg",
+      "images": [
+        "/images/projects/1-up-tor-script-hidden-onion-service.gif"
+      ],
+      "link": "https://github.com/MarcusHoltz/tor-hidden-service",
+      "colorIcon": "/images/icons/dashboard-icons/tor.png",
+      "githubRepo": "tor-hidden-service"
+    },
+    {
+      "title": "Transparent Nginx WAF on OPNsense",
+      "company": "Security Infrastructure",
+      "category": "infrastructure",
+      "description": "Transparent Web Application Firewall using Nginx on OPNsense with Caddy and Traefik failover — layer-7 inspection and active threat blocking for self-hosted services, with zero changes required at the application layer.",
+      "tags": [
+        "Nginx",
+        "WAF",
+        "OPNsense",
+        "Caddy",
+        "Traefik"
+      ],
+      "icon": "shield-check",
+      "backgroundImage": "/images/projects/nginx-waf.jpg",
+      "images": [
+        "/images/projects/nginx-waf.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/opnsense-nginx-waf-failover-with-caddy-and-traefik/",
+      "colorIcon": "/images/icons/dashboard-icons/nginx.png"
+    },
+    {
+      "title": "Automated Job Search AI Assistant",
+      "company": "Personal AI Project",
+      "category": "devops",
+      "description": "AI-powered agent that autonomously scrapes job listings, scores relevance against a target profile using an LLM, and delivers prioritized alerts. Removes the noise from job hunting entirely.",
+      "tags": [
+        "Python",
+        "LLM / AI",
+        "n8n",
+        "Automation",
+        "Alerts"
+      ],
+      "icon": "cpu-chip",
+      "backgroundImage": "/images/projects/ai-job-assistant.jpg",
+      "images": [
+        "/images/projects/ai-job-assistant.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/n8n-automated-job-search-alerts/",
+      "colorIcon": "/images/icons/dashboard-icons/n8n.png"
+    },
+    {
+      "title": "Chrome/Firefox Browser Extension - Zammad Time Tracker",
+      "company": "Personal Project",
+      "category": "web",
+      "description": "Chrome and Firefox browser extensions for tracking and submitting time directly to Zammad helpdesk tickets — eliminates context-switching, lets you log time without leaving the page you're working on.",
+      "tags": [
+        "JavaScript",
+        "Browser Extension",
+        "Chrome",
+        "Firefox",
+        "Zammad"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/zammad-time-tracker.png",
+      "images": [
+        "/images/projects/zammad-time-tracker.png"
+      ],
+      "link": "https://github.com/MarcusHoltz/zammad-time-tracker-browser-extensions",
+      "colorIcon": "/images/icons/dashboard-icons/zammad.png",
+      "githubRepo": "zammad-time-tracker-browser-extensions"
+    },
+    {
+      "title": "Zammad Knowledge Base Automated Backup to Static Site",
+      "company": "Systems Administration",
+      "category": "devops",
+      "description": "Self-contained Docker tool that exports a Zammad Knowledge Base entirely to a directory tree of Markdown files. Scheduled exports, compression, and off-site transfer — zero manual intervention.",
+      "tags": [
+        "Zammad",
+        "Docker",
+        "Markdown",
+        "Backup",
+        "Automation"
+      ],
+      "icon": "arrow-path",
+      "backgroundImage": "/images/projects/zammad-backup.jpg",
+      "images": [
+        "/images/projects/zammad-backup.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/zammad-knowledge-base-export-to-static-site",
+      "colorIcon": "/images/icons/dashboard-icons/zammad.png",
+      "githubRepo": "zammad-knowledge-base-export-to-static-site"
+    },
+    {
+      "title": "Reticulum Mesh Network Demo",
+      "company": "Personal Project",
+      "category": "infrastructure",
+      "description": "Self-contained Docker demo for Reticulum — a cryptographic mesh networking stack where your address is the hash of your public key. Runs encrypted shells, file transfers, and LoRa mesh radio demos from a browser terminal.",
+      "tags": [
+        "Reticulum",
+        "Docker",
+        "Mesh Networking",
+        "LoRa",
+        "Encryption"
+      ],
+      "icon": "wifi",
+      "backgroundImage": "/images/projects/reticulum-demo.jpg",
+      "images": [
+        "/images/projects/reticulum-demo.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/reticulum-demo",
+      "colorIcon": "mdi:radio-tower",
+      "githubRepo": "reticulum-demo"
+    },
+    {
+      "title": "Traefik Docker Cron Scheduler",
+      "company": "DevOps / Automation",
+      "category": "devops",
+      "description": "Toggles Traefik reverse proxy services on and off based on a configurable cron schedule. Useful for shutting down non-critical services during off-hours without removing their configuration.",
+      "tags": [
+        "Traefik",
+        "Docker",
+        "Cron",
+        "Automation",
+        "Scheduling"
+      ],
+      "icon": "clock",
+      "backgroundImage": "/images/projects/traefik-cron.jpg",
+      "images": [
+        "/images/projects/traefik-cron.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/traefik-docker-cron",
+      "colorIcon": "/images/icons/dashboard-icons/traefik.png",
+      "githubRepo": "traefik-docker-cron"
+    },
+    {
+      "title": "nzyme Wireless Security Monitoring",
+      "company": "Security Infrastructure",
+      "category": "security",
+      "description": "Deploys nzyme — a Java-based WiFi threat detection system using libpcap packet capture — to identify and physically locate rogue devices and attacks on wireless networks, with PostgreSQL backend and web dashboards.",
+      "tags": [
+        "nzyme",
+        "WiFi",
+        "Packet Capture",
+        "Security",
+        "Monitoring"
+      ],
+      "icon": "wifi",
+      "backgroundImage": "/images/projects/nzyme.jpg",
+      "images": [
+        "/images/projects/nzyme.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/nzyme-install-wizard",
+      "colorIcon": "mdi:wifi-alert",
+      "githubRepo": "nzyme-install-wizard"
+    },
+    {
+      "title": "Proxmox 8→9 Upgrade Script",
+      "company": "Systems Administration",
+      "category": "devops",
+      "description": "Safe, automated upgrade script for Proxmox VE 8 to 9 with pre-flight safety checks, cluster awareness, and Proxmox Backup Server compatibility — no manual steps, no surprises.",
+      "tags": [
+        "Proxmox",
+        "Bash",
+        "Automation",
+        "Upgrade",
+        "Cluster"
+      ],
+      "icon": "server-stack",
+      "backgroundImage": "/images/projects/proxmox-upgrade.jpg",
+      "images": [
+        "/images/projects/proxmox-upgrade.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/proxmox-8to9-upgrade",
+      "colorIcon": "/images/icons/dashboard-icons/proxmox.png",
+      "githubRepo": "proxmox-8to9-upgrade"
+    },
+    {
+      "title": "OPNsense Multi-Site HAProxy + Unbound",
+      "company": "Network Engineering",
+      "category": "infrastructure",
+      "description": "Visual guide to routing multiple domains through a single OPNsense box using HAProxy for layer-7 traffic splitting, Unbound for split-DNS, DNSCrypt for encrypted upstream, and WireGuard for secure remote access.",
+      "tags": [
+        "OPNsense",
+        "HAProxy",
+        "Unbound",
+        "DNSCrypt",
+        "WireGuard"
+      ],
+      "icon": "wifi",
+      "backgroundImage": "/images/projects/haproxy-unbound.jpg",
+      "images": [
+        "/images/projects/haproxy-unbound.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/visual-guide-to-opnsense-with-multple-sites/",
+      "colorIcon": "/images/icons/dashboard-icons/opnsense.png"
+    },
+    {
+      "title": "OPNsense WireGuard Site-to-Site VPN",
+      "company": "Network Engineering",
+      "category": "infrastructure",
+      "description": "Full WireGuard VPN deployment on OPNsense for site-to-site tunnels and remote access — cryptographic key routing, firewall rules, DNSCrypt for encrypted resolution, and multi-site subnet routing.",
+      "tags": [
+        "WireGuard",
+        "OPNsense",
+        "VPN",
+        "DNSCrypt",
+        "Unbound"
+      ],
+      "icon": "lock-closed",
+      "backgroundImage": "/images/projects/wireguard-vpn.jpg",
+      "images": [
+        "/images/projects/wireguard-vpn.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/opnsense-wireguard-vpn/",
+      "colorIcon": "/images/icons/dashboard-icons/wireguard.png"
+    },
+    {
+      "title": "PowerDNS + Unbound DNS Infrastructure",
+      "company": "Network Engineering",
+      "category": "infrastructure",
+      "description": "Authoritative and recursive DNS infrastructure using PowerDNS with a web GUI for internal zones, and Unbound for DNSSEC-validating recursive resolution — fully self-hosted, no upstream provider dependency.",
+      "tags": [
+        "PowerDNS",
+        "Unbound",
+        "DNS",
+        "DNSSEC",
+        "Self-Hosted"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/powerdns.jpg",
+      "images": [
+        "/images/projects/powerdns.jpg"
+      ],
+      "link": "https://blog.holtzweb.com/posts/powerdns-install-with-web-ui-on-mariadb/",
+      "colorIcon": "/images/icons/dashboard-icons/powerdns.png"
+    },
+    {
+      "title": "Immich Self-Hosted Photo Platform",
+      "company": "Home Lab / Infrastructure",
+      "category": "infrastructure",
+      "description": "Complete Immich deployment on UnRAID with Docker — self-hosted Google Photos replacement with ML-powered photo analysis, duplicate detection, multi-user support, video compression, and NetBird VPN for remote access.",
+      "tags": [
+        "Immich",
+        "Docker",
+        "UnRAID",
+        "Machine Learning",
+        "Self-Hosted"
+      ],
+      "icon": "eye",
+      "backgroundImage": "/images/projects/immich.jpg",
+      "images": [
+        "/images/projects/immich.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/immich-setup",
+      "colorIcon": "/images/icons/dashboard-icons/immich.png",
+      "githubRepo": "immich-setup"
+    },
+    {
+      "title": "DNS Image Transfer",
+      "company": "Personal Project",
+      "category": "security",
+      "description": "Converts an image to Base64, splits it across multiple DNS TXT records, and stores the retrieval script in DNS itself. Download and reconstruct the image anywhere with just `dig` — no server, no HTTP.",
+      "tags": [
+        "DNS",
+        "Base64",
+        "Bash",
+        "Cloudflare",
+        "Networking"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/dns-image-transfer.png",
+      "images": [
+        "/images/projects/dns-image-transfer.png"
+      ],
+      "link": "https://github.com/MarcusHoltz/DNS-photo-download",
+      "colorIcon": "/images/icons/dashboard-icons/cloudflare.png",
+      "githubRepo": "DNS-photo-download"
+    },
+    {
+      "title": "Eclipse — Interactive Tourism Event Map",
+      "company": "Client Project",
+      "category": "web",
+      "description": "Custom web application for a tourism client featuring an interactive JavaScript-powered event map with filterable overlays, responsive layout, and client-branded design delivered to production.",
+      "tags": [
+        "JavaScript",
+        "Web Design",
+        "Interactive Maps",
+        "Responsive",
+        "Client Work"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/eclipse.png",
+      "images": [
+        "/images/projects/eclipse.png"
+      ],
+      "link": "https://www.holtzweb.com/portfolio",
+      "colorIcon": "mdi:map-marker"
+    },
+    {
+      "title": "Chef Clash — Non-Profit Donor Platform",
+      "company": "Client Project",
+      "category": "web",
+      "description": "Full fundraising platform for a live charitable event — distinct donor and recipient user flows, event management, real-time updates, and custom branding. Designed and deployed end-to-end.",
+      "tags": [
+        "Web Development",
+        "Non-Profit",
+        "JavaScript",
+        "UX Design",
+        "Client Work"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/chef-clash.png",
+      "images": [
+        "/images/projects/chef-clash.png"
+      ],
+      "link": "https://www.holtzweb.com/portfolio",
+      "colorIcon": "mdi:hand-coin-outline"
+    },
+    {
+      "title": "WheelSpin — Self-Hosted Random Selector",
+      "company": "Personal Project",
+      "category": "web",
+      "description": "Self-hosted spinning wheel web application for randomly selecting outcomes. Fully configurable with custom entries, deployed via Docker for easy self-hosting.",
+      "tags": [
+        "JavaScript",
+        "Docker",
+        "Self-Hosted",
+        "Web App",
+        "Fun"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/wheelspin-website.jpg",
+      "images": [
+        "/images/projects/wheelspin-website.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/wheelspin",
+      "colorIcon": "mdi:tire",
+      "githubRepo": "wheelspin"
+    },
+    {
+      "title": "Self-Hosted Interactive Map",
+      "company": "Personal Project",
+      "category": "web",
+      "description": "Self-hosted web application for drawing and labeling geographic areas with persistent storage. Used for network maps, infrastructure diagrams, and geographic planning — no cloud dependency.",
+      "tags": [
+        "JavaScript",
+        "Docker",
+        "Self-Hosted",
+        "Mapping",
+        "Visualization"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/self-hosted-interactive-map.jpg",
+      "images": [
+        "/images/projects/self-hosted-interactive-map.jpg"
+      ],
+      "link": "https://github.com/MarcusHoltz/map-layers",
+      "colorIcon": "mdi:map",
+      "githubRepo": "map-layers"
+    },
+    {
+      "title": "OpenWRT Network Infrastructure",
+      "company": "Public Talk — SFS, Littleton CO",
+      "category": "talks",
+      "description": "Public presentation on custom router firmware ecosystems — comparing OpenWRT, DD-WRT, Tomato, and Gargoyle across 1,500+ supported devices. Covers build systems, package management, and network hardening.",
+      "tags": [
+        "OpenWRT",
+        "Networking",
+        "Routing",
+        "Linux",
+        "Firmware"
+      ],
+      "icon": "wrench-screwdriver",
+      "sliderImage": "/images/projects/openwrt-talk.jpg",
+      "sliderOrder": 18,
+      "backgroundImage": "/images/projects/openwrt-talk.jpg",
+      "images": [
+        "/images/projects/openwrt-talk.jpg"
+      ],
+      "link": "https://www.holtzweb.com/openwrt-presentation.html",
+      "colorIcon": "/images/icons/dashboard-icons/openwrt.png"
+    },
+    {
+      "title": "Self-Hosted Social Networking Services",
+      "company": "Public Talk — SFS, Littleton CO · December 2022",
+      "category": "talks",
+      "description": "Presented software solutions for running connected social networking services — Mastodon, ActivityPub federation, and self-hosted alternatives to corporate social platforms on private infrastructure.",
+      "tags": [
+        "Mastodon",
+        "ActivityPub",
+        "Self-Hosted",
+        "Privacy",
+        "Decentralization"
+      ],
+      "icon": "globe-alt",
+      "backgroundImage": "/images/projects/masto-fediverse.jpg",
+      "images": [
+        "/images/projects/masto-fediverse.jpg"
+      ],
+      "link": "https://nextcloud.sofree.us/index.php/s/rzi7Jr6DmATHyoE",
+      "colorIcon": "/images/icons/dashboard-icons/mastodon.png"
+    },
+    {
+      "title": "Homelab: Introduction to Self-Hosting",
+      "company": "Public Talk — SFS, Littleton CO",
+      "category": "talks",
+      "description": "Beginner-to-intermediate guide on running personal infrastructure you own and control. Covers motivations (privacy, learning, custom solutions), a 4-step framework for getting started, hardware choices from Raspberry Pi to rack servers, and real-world use cases: home automation, media streaming, file storage, and password management.",
+      "tags": [
+        "Self-Hosting",
+        "Homelab",
+        "Raspberry Pi",
+        "Docker",
+        "Infrastructure"
+      ],
+      "icon": "server-stack",
+      "backgroundImage": "/images/projects/homelab.jpg",
+      "images": [
+        "/images/projects/homelab.jpg"
+      ],
+      "link": "https://www.holtzweb.com/talks/homelab/",
+      "colorIcon": "/images/icons/dashboard-icons/proxmox.png"
     }
   ]
 }

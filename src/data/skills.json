@@ -5,60 +5,141 @@
   },
   "categories": [
     {
-      "title": "Design & Illustration",
+      "title": "Infrastructure & Virtualization",
       "skills": [
-        { "name": "Figma",       "icon": "simple-icons:figma" },
-        { "name": "Photoshop",   "icon": "simple-icons:adobephotoshop" },
-        { "name": "Illustrator", "icon": "simple-icons:adobeillustrator" },
-        { "name": "Blender",     "icon": "simple-icons:blender" },
-        { "name": "Sketch",      "icon": "simple-icons:sketch" }
+        {
+          "name": "Linux",
+          "icon": "devicon:linux"
+        },
+        {
+          "name": "Debian",
+          "icon": "devicon:debian-wordmark"
+        },
+        {
+          "name": "Ubuntu",
+          "icon": "devicon:ubuntu-wordmark"
+        },
+        {
+          "name": "Proxmox",
+          "icon": "simple-icons:proxmox"
+        },
+        {
+          "name": "OpenZFS",
+          "icon": "simple-icons:openzfs"
+        }
       ]
     },
     {
-      "title": "Web & Frontend",
+      "title": "Containers & DevOps",
       "skills": [
-        { "name": "HTML5",      "icon": "simple-icons:html5" },
-        { "name": "CSS3",       "icon": "simple-icons:css3" },
-        { "name": "JavaScript", "icon": "simple-icons:javascript" },
-        { "name": "TypeScript", "icon": "simple-icons:typescript" },
-        { "name": "React",      "icon": "simple-icons:react" },
-        { "name": "Bootstrap",  "icon": "simple-icons:bootstrap" }
+        {
+          "name": "Docker",
+          "icon": "devicon:docker-wordmark"
+        },
+        {
+          "name": "Kubernetes",
+          "icon": "devicon:kubernetes-wordmark"
+        },
+        {
+          "name": "Ansible",
+          "icon": "devicon:ansible"
+        },
+        {
+          "name": "Terraform",
+          "icon": "devicon:terraform-wordmark"
+        },
+        {
+          "name": "Git",
+          "icon": "devicon:git-wordmark"
+        },
+        {
+          "name": "GitLab CI",
+          "icon": "devicon:gitlab-wordmark"
+        }
       ]
     },
     {
-      "title": "Motion, 3D & Video",
+      "title": "Web Servers & Networking",
       "skills": [
-        { "name": "Three.js",     "icon": "simple-icons:threedotjs" },
-        { "name": "After Effects","icon": "simple-icons:adobeaftereffects" },
-        { "name": "Premiere Pro", "icon": "simple-icons:adobepremierepro" },
-        { "name": "Photoshop",    "icon": "simple-icons:adobephotoshop" }
+        {
+          "name": "Nginx",
+          "icon": "devicon:nginx"
+        },
+        {
+          "name": "Apache",
+          "icon": "devicon:apache-wordmark"
+        },
+        {
+          "name": "HAProxy",
+          "icon": "devicon:haproxy"
+        },
+        {
+          "name": "SSH",
+          "icon": "mdi:ssh"
+        }
       ]
     },
     {
-      "title": "Platforms & Publishing",
+      "title": "Monitoring & Cloud",
       "skills": [
-        { "name": "WordPress", "icon": "simple-icons:wordpress" },
-        { "name": "Drupal",    "icon": "simple-icons:drupal" },
-        { "name": "Hugo",      "icon": "simple-icons:hugo" },
-        { "name": "AWS",       "icon": "simple-icons:amazonaws" }
+        {
+          "name": "Prometheus",
+          "icon": "devicon:prometheus"
+        },
+        {
+          "name": "Grafana",
+          "icon": "devicon:grafana"
+        },
+        {
+          "name": "AWS",
+          "icon": "devicon:amazonwebservices-wordmark"
+        },
+        {
+          "name": "Bash",
+          "icon": "devicon:bash"
+        }
       ]
     },
     {
-      "title": "Dev & Workflow Tools",
+      "title": "Web & CMS",
       "skills": [
-        { "name": "Git",      "icon": "simple-icons:git" },
-        { "name": "GitHub",   "icon": "simple-icons:github" },
-        { "name": "Bash",     "icon": "simple-icons:gnubash" },
-        { "name": "Markdown", "icon": "simple-icons:markdown" }
+        {
+          "name": "WordPress",
+          "icon": "devicon:wordpress"
+        },
+        {
+          "name": "Drupal",
+          "icon": "devicon:drupal-wordmark"
+        },
+        {
+          "name": "Hugo",
+          "icon": "devicon:hugo"
+        },
+        {
+          "name": "Bootstrap",
+          "icon": "devicon:bootstrap-wordmark"
+        }
       ]
     },
     {
-      "title": "Data & Infrastructure",
+      "title": "Design & Documentation",
       "skills": [
-        { "name": "SQLite",     "icon": "simple-icons:sqlite" },
-        { "name": "Nginx",      "icon": "simple-icons:nginx" },
-        { "name": "Docker",     "icon": "simple-icons:docker" },
-        { "name": "Prometheus", "icon": "simple-icons:prometheus" }
+        {
+          "name": "Photoshop",
+          "icon": "devicon:photoshop"
+        },
+        {
+          "name": "LaTeX",
+          "icon": "devicon:latex"
+        },
+        {
+          "name": "Markdown",
+          "icon": "devicon:markdown"
+        },
+        {
+          "name": "SQLite",
+          "icon": "devicon:sqlite-wordmark"
+        }
       ]
     }
   ]
