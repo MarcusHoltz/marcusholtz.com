@@ -152,7 +152,7 @@
 
 @layer utilities {
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 50%, #a855f7 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 33%, #716ae3 66%, #6366f1 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -162,7 +162,7 @@
   }
 
   [data-theme="light"] .gradient-text {
-    background: linear-gradient(135deg, #4f46e5 0%, #0284c7 50%, #7c3aed 100%);
+    background: linear-gradient(90deg, #716ae3, #4984a2, #716ae3);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
