@@ -6,12 +6,12 @@ services:
   # ── Builder ─────────────────────────────────────────────────────────────────
   # Default workflow: runs lint → typecheck → build, writes dist/ to ./output
   # Usage: docker compose build && docker compose up
-  astro-portfolio-theme:
+  mhweb:
     build:
       context: .
       target: builder
       network: host
-    container_name: astro-portfolio-theme
+    container_name: mhweb
     volumes:
       - ./output:/app/dist:z
       - type: tmpfs
@@ -19,9 +19,12 @@ services:
         tmpfs:
           mode: 0777
     environment:
-      - SITE_URL=https://www.example.com
+      - SITE_URL=https://www.marcusholtz.com
       - BASE_PATH=/
-      - GITHUB_USER=your-github-username
+      - GITHUB_USER=marcusholtz
+      # Pass GITHUB_TOKEN from host env when running in CI/CD (GitLab, GitHub, Gitea).
+      # entrypoint.sh prefers this over the Docker secrets file.
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - HOST_UID=${UID:-1000}
       - HOST_GID=${GID:-1000}
     secrets:
@@ -45,19 +48,19 @@ services:
   # Optional: bakes dist/ into a lean nginx image and serves it.
   # Use this on your production machine instead of copying files manually.
   # Usage: docker compose --profile serve build && docker compose --profile serve up -d
-  astro-serve:
+  mhweb-serve:
     build:
       context: .
       target: server
       secrets:
         - github_token_password
-    container_name: astro-serve
+    container_name: mhweb-serve
     ports:
-      - '80:80'
+      - '8089:80'
     restart: unless-stopped
     environment:
-      - SITE_URL=https://www.example.com
+      - SITE_URL=https://www.holtzweb.com
       - BASE_PATH=/
-      - GITHUB_USER=your-github-username
+      - GITHUB_USER=marcusholtz
     profiles:
       - serve
