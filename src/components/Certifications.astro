@@ -1,0 +1,270 @@
+---
+import certificationsData from '../data/certifications.json';
+
+type CertType = 'certification' | 'professional-development' | 'in-progress';
+
+// Returns the CSS class for the status badge chip (green / amber / blue).
+function badgeClass(type: CertType) {
+  if (type === 'professional-development') return 'badge-pro-dev';
+  if (type === 'in-progress') return 'badge-in-progress';
+  return 'badge-earned';
+}
+
+// Returns the Tailwind hover utility that colours the certification title on card hover.
+function titleHoverClass(type: CertType) {
+  if (type === 'professional-development') return 'group-hover:text-amber-400';
+  if (type === 'in-progress') return 'group-hover:text-blue-400';
+  return 'group-hover:text-accent';
+}
+
+// Returns an optional BEM modifier class added to the card for type-specific border/shadow overrides.
+function cardModClass(type: CertType) {
+  if (type === 'in-progress') return 'cert-in-progress';
+  if (type === 'professional-development') return 'cert-pro-dev';
+  return '';
+}
+---
+
+<section id="certifications" class="py-24" style="scroll-margin-top: 80px;">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <p class="text-sm font-semibold tracking-widest text-highlight uppercase mb-3">Credentials</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold section-title">Certifications</h2>
+      <div class="flex flex-wrap items-center justify-center gap-4 mt-5">
+        <span class="legend-item">
+          <span class="legend-dot dot-earned"></span>Certification
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot dot-pro-dev"></span>Professional Development
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot dot-in-progress"></span>In Progress
+        </span>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      {
+        certificationsData.map((cert, i) => {
+          const type = (cert.type ?? 'certification') as CertType;
+          return (
+            <div
+              class={`card group reveal ${cardModClass(type)}`}
+              style={`transition-delay: ${(i % 2) * 0.1}s;`}
+            >
+              <div class="space-y-3">
+                <div class="flex items-start justify-between gap-4">
+                  <h3
+                    class={`text-base font-bold text-white transition-colors leading-snug ${titleHoverClass(type)}`}
+                  >
+                    {cert.name}
+                  </h3>
+                  <span class={`cert-badge ${badgeClass(type)}`}>
+                    {type === 'in-progress' && <span class="badge-pulse-dot" />}
+                    {cert.status}
+                  </span>
+                </div>
+
+                <p
+                  class={`text-xs font-semibold uppercase tracking-wider ${type === 'professional-development' ? 'text-amber-500/70' : type === 'in-progress' ? 'text-blue-400/80' : 'text-accent'}`}
+                >
+                  {cert.issuer}
+                  {type === 'professional-development' && <span class="issuer-tag">Course</span>}
+                </p>
+
+                <p class="text-slate-400 text-sm leading-relaxed">{cert.description}</p>
+
+                <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                  <span class="text-xs text-slate-600 font-mono">{cert.date}</span>
+
+                  {type === 'in-progress' ? (
+                    <span class="in-progress-label">
+                      <span class="ip-pulse" />
+                      Actively Studying
+                    </span>
+                  ) : cert.credentialUrl ? (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class={`inline-flex items-center gap-1.5 transition-colors text-xs font-medium ${type === 'professional-development' ? 'text-amber-500/70 hover:text-amber-400' : 'text-accent hover:text-highlight'}`}
+                    >
+                      <span>
+                        {type === 'professional-development'
+                          ? 'View Certificate'
+                          : 'View Credential'}
+                      </span>
+                      <svg
+                        class="w-3.5 h-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  ) : (
+                    <span class="text-slate-700 text-xs italic">No link available</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('#certifications .reveal').forEach((el) => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+  });
+</script>
+
+<style>
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #475569;
+    letter-spacing: 0.03em;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-earned {
+    background: #34d399;
+  }
+  .dot-pro-dev {
+    background: #f59e0b;
+  }
+  .dot-in-progress {
+    background: #60a5fa;
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.6);
+  }
+
+  .cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border: 1px solid;
+  }
+
+  .badge-earned {
+    background: rgba(16, 185, 129, 0.12);
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+
+  .badge-pro-dev {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, 0.25);
+  }
+
+  .badge-in-progress {
+    background: rgba(96, 165, 250, 0.12);
+    color: #93c5fd;
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .badge-pulse-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60a5fa;
+    flex-shrink: 0;
+    will-change: transform, opacity;
+  }
+  @keyframes badge-dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.7);
+    }
+  }
+
+  .issuer-tag {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    vertical-align: middle;
+  }
+
+  .cert-pro-dev {
+    border-color: rgba(245, 158, 11, 0.12);
+  }
+  .cert-pro-dev:hover {
+    border-color: rgba(245, 158, 11, 0.35) !important;
+    box-shadow: 0 8px 40px rgba(245, 158, 11, 0.08) !important;
+  }
+
+  .cert-in-progress {
+    border: 1px dashed rgba(96, 165, 250, 0.35);
+    background: rgba(15, 23, 42, 0.6);
+  }
+  .cert-in-progress:hover {
+    border-color: rgba(96, 165, 250, 0.65) !important;
+    box-shadow:
+      0 8px 40px rgba(96, 165, 250, 0.12),
+      0 0 0 1px rgba(96, 165, 250, 0.15) !important;
+  }
+  .in-progress-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #60a5fa;
+    opacity: 0.8;
+  }
+  .ip-pulse {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #60a5fa;
+    animation: badge-dot-pulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+    will-change: transform, opacity;
+  }
+</style>

@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Brand Identity & Visual System",
+    "category": "Branding",
+    "description": "A complete brand overhaul for a growing company — logo, typography, color system, and a style guide built to scale. Designed for flexibility without sacrificing cohesion.",
+    "images": [
+      "/images/portfolio/project-1a.jpg",
+      "/images/portfolio/project-1b.jpg",
+      "/images/portfolio/project-1c.jpg"
+    ],
+    "slides": ["Brand Overview", "Style Guide Spread", "Product Shot"]
+  },
+  {
+    "title": "Interactive Web Experience",
+    "category": "Web Design",
+    "description": "A custom-built site blending editorial layout with smooth scroll interactions and motion. Designed in Figma, built in code, and optimized down to the frame.",
+    "images": [
+      "/images/portfolio/project-2a.jpg",
+      "/images/portfolio/project-2b.jpg",
+      "/images/portfolio/project-2c.jpg"
+    ],
+    "slides": ["Homepage Figma Design", "Homepage Complete", "Second Phase app page"]
+  },
+  {
+    "title": "Short Film & Motion Piece",
+    "category": "Video",
+    "description": "A two-minute visual essay combining original footage, 3D elements, and motion design. Shot, edited, and scored independently — start to finish in three weeks.",
+    "images": [
+      "/images/portfolio/project-3a.jpg",
+      "/images/portfolio/project-3b.jpg"
+    ],
+    "slides": ["Opening Scene", "Modeling Sequence", "Developing Music for Documentary"]
+  }
+]

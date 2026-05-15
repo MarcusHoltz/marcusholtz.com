@@ -1,0 +1,112 @@
+# Dependencies — Docker installs these fresh via npm ci
+node_modules/
+
+# Build output — generated during the Docker build, not copied in
+dist/
+output/
+
+# Astro cache — regenerated during build
+.astro/
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker files themselves
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Secrets — never sent to Docker build context
+secrets/
+
+# Env files
+.env
+.env.*
+*.env
+
+# Docs / misc
+README*
+LICENSE
+*.md
+
+# AI LLM Tool Directories
+
+# Anthropic / Claude
+.claude/
+
+# OpenAI / ChatGPT / Codex
+.openai/
+
+# GitHub Copilot
+.github/copilot/
+.copilot/
+
+# Cursor
+.cursor/
+.cursorignore
+.cursorindexingignore
+
+# Codeium
+.codeium/
+
+# Tabnine
+.tabnine/
+
+# Amazon CodeWhisperer / Q Developer
+.aws/amazonq/
+.amazonq/
+
+# Google Gemini / Duet AI
+.gemini/
+
+# Cody (Sourcegraph)
+.cody/
+
+# Continue.dev
+.continue/
+
+# Aider
+.aider/
+.aider.tags.cache.v3/
+.aider.chat.history.md
+.aider.input.history
+
+# Windsurf (Codeium)
+.windsurf/
+
+# Zed AI
+.zed/
+
+# Pieces
+.pieces/
+
+# Supermaven
+.supermaven/
+
+# Replit AI
+.replit/
+replit.nix
+
+# v0 (Vercel)
+.v0/
+
+# Bolt (StackBlitz)
+.bolt/
+
+# Devin
+.devin/
+
+# Sweep AI
+.sweep/
+
+# Copilot4PRs / CodeRabbit
+.coderabbit/
+.coderabbit.yaml

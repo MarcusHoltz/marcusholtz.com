@@ -1,0 +1,847 @@
+---
+import personalData from '../data/personal.json';
+import menu from '../data/menu.json';
+import siteData from '../data/site.json';
+
+const { sections } = menu;
+
+// Build external nav links from site.json definitions, skipping any whose personal.json key is empty.
+// This lets site authors add potential platforms to navExternal without requiring all fields be filled.
+const external = siteData.navExternal
+  .map((item) => {
+    const value = (personalData as unknown as Record<string, string>)[item.personalKey] ?? '';
+    if (!value) return null;
+    return {
+      label: item.label,
+      desc: item.desc,
+      url: item.urlTemplate.replace('{value}', value),
+    };
+  })
+  .filter(Boolean) as { label: string; desc: string; url: string }[];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+  <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#home" class="text-lg font-bold gradient-text tracking-tight shrink-0">
+        {personalData.name}
+      </a>
+
+      <div class="hidden lg:flex items-center gap-6">
+        {
+          sections.map((item) => (
+            <a href={item.href} class="nav-link nav-link-sm">
+              {item.shortLabel}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="flex items-center gap-3">
+        <label class="switch" aria-label="Toggle light/dark mode" title="Toggle light / dark mode">
+          <span class="sun"
+            ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+              ><g fill="#918155"
+                ><circle r="5" cy="12" cx="12"></circle><path
+                  d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"
+                ></path></g
+              ></svg
+            ></span
+          >
+          <span class="moon"
+            ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
+              ><path
+                d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+              ></path></svg
+            ></span
+          >
+          <input type="checkbox" class="input" id="theme-checkbox" />
+          <span class="slider"></span>
+        </label>
+
+        <a href="#contact" class="cta-btn hidden sm:inline-flex">Contact Me</a>
+        <button id="menu-open-btn" class="hamburger-btn" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="dm-wrapper" class="dm-wrapper">
+      <div class="desktop-mega">
+        {
+          external.map((link, i) => (
+            <a href={link.url} target="_blank" rel="noopener" class="dm-item" style={`--i: ${i};`}>
+              <span class="dm-num">0{i + 1}</span>
+              <span class="dm-body">
+                <span class="dm-label">{link.label}</span>
+                <span class="dm-desc">{link.desc}</span>
+              </span>
+              <svg
+                class="dm-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div
+  id="overlay-menu"
+  class="overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+  aria-hidden="true"
+>
+  <button id="menu-close-btn" class="overlay-close" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <div class="overlay-glow" aria-hidden="true"></div>
+
+  <div class="overlay-inner">
+    <p class="overlay-eyebrow">Explore</p>
+    <nav class="overlay-nav">
+      {
+        sections.map((item, i) => (
+          <a href={item.href} class="overlay-link" style={`--i: ${i};`}>
+            <span class="overlay-num">0{i + 1}</span>
+            <span class="overlay-link-body">
+              <span class="overlay-link-label">{item.label}</span>
+              <span class="overlay-link-desc">{item.desc}</span>
+            </span>
+            <svg
+              class="overlay-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="overlay-bottom">
+      <p class="overlay-bottom-label">External</p>
+      {
+        external.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener" class="overlay-quick-link">
+            {link.label}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="overlay-ext-icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .cta-btn {
+    align-items: center;
+    padding: 0.45rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: rgb(99 102 241);
+    white-space: nowrap;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .cta-btn:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgb(99 102 241);
+  }
+  .cta-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 34px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition:
+      filter 500ms ease-in-out,
+      transform 500ms ease-in-out;
+    transform: scale(0.75);
+    filter: saturate(1.25) brightness(1.33);
+  }
+  .switch:hover,
+  .switch:focus-within {
+    filter: saturate(1.5) brightness(1.5);
+  }
+  .switch:focus-within .slider {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-surface);
+    transition: 0.4s;
+    border-radius: 30px;
+  }
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--text-muted);
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  .switch .sun svg {
+    position: absolute;
+    top: 6px;
+    left: 36px;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+    animation: sw-rotate 30s linear infinite;
+    will-change: transform;
+  }
+  .switch .moon svg {
+    fill: var(--text-muted);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+    animation: sw-tilt 5s linear infinite;
+    will-change: transform;
+  }
+  @keyframes sw-rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes sw-tilt {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-10deg);
+    }
+    75% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  .switch .sun {
+    display: block;
+  }
+  .switch .moon {
+    display: none;
+  }
+  .switch:has(.input:checked) .sun {
+    display: none;
+  }
+  .switch:has(.input:checked) .moon {
+    display: block;
+  }
+
+  .input:checked + .slider {
+    background-color: var(--bg-card);
+  }
+  .input:focus + .slider {
+    box-shadow: 0 0 1px var(--bg-card);
+  }
+  .input:checked + .slider:before {
+    transform: translateX(30px);
+    background-color: var(--accent-blue);
+  }
+  @media (max-width: 767px) {
+    .switch {
+      position: absolute;
+      right: 15vw;
+    }
+  }
+
+  .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .hamburger-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .hamburger-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .hamburger-btn span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 9999px;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease,
+      width 0.3s ease;
+  }
+  .hamburger-btn span:nth-child(3) {
+    width: 65%;
+  }
+
+  .nav-link-sm {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .nav-link-sm:hover {
+    color: var(--text);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg-overlay);
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .overlay.open {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: all;
+  }
+
+  .overlay-glow {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .overlay-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+    z-index: 10;
+  }
+  .overlay-close svg {
+    width: 20px;
+    height: 20px;
+  }
+  .overlay-close:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .overlay-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .overlay-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    padding: 5rem 6vw 3rem;
+    max-width: 860px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .overlay-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 2.5rem;
+  }
+
+  .overlay-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .overlay-link {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.45s ease calc(var(--i) * 0.07s),
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 0.07s),
+      color 0.2s ease;
+  }
+  .overlay.open .overlay-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .overlay-link:hover {
+    color: var(--text);
+  }
+
+  .overlay-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(99, 102, 241, 0.05);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .overlay-link:hover::before {
+    opacity: 1;
+  }
+
+  .overlay-num {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-dimmer);
+    min-width: 2rem;
+    transition: color 0.2s ease;
+  }
+  .overlay-link:hover .overlay-num {
+    color: rgba(99, 102, 241, 0.7);
+  }
+
+  .overlay-link-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+  }
+
+  .overlay-link-label {
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    transition: color 0.25s ease;
+  }
+  .overlay-link:hover .overlay-link-label {
+    color: var(--accent);
+  }
+
+  .overlay-link-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+  }
+  .overlay-link:hover .overlay-link-desc {
+    color: var(--text-muted);
+  }
+
+  .overlay-arrow {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--text-dimmer);
+    flex-shrink: 0;
+    transition:
+      color 0.2s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .overlay-link:hover .overlay-arrow {
+    color: #a5b4fc;
+    transform: translate(4px, -4px);
+  }
+
+  .overlay-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  .overlay-bottom-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    width: 100%;
+    margin-bottom: 0.1rem;
+  }
+
+  .overlay-quick-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    transition: color 0.2s ease;
+  }
+  .overlay-quick-link:hover {
+    color: var(--accent);
+  }
+
+  .overlay-ext-icon {
+    width: 11px;
+    height: 11px;
+    opacity: 0.6;
+  }
+
+  .dm-wrapper {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .dm-wrapper {
+      display: grid;
+      grid-template-rows: 1fr;
+      opacity: 1;
+      border-top: 1px solid var(--border);
+      transition:
+        grid-template-rows 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease,
+        border-top-color 0.4s ease;
+    }
+    header.scrolled .dm-wrapper {
+      grid-template-rows: 0fr;
+      opacity: 0;
+      border-top-color: transparent;
+    }
+  }
+
+  .desktop-mega {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    margin: 0 -1rem;
+  }
+
+  .dm-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1rem;
+    border-right: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text-dim);
+    position: relative;
+    overflow: hidden;
+    transition:
+      color 0.2s ease,
+      background 0.25s ease,
+      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) calc((var(--i)) * 0.04s),
+      opacity 0.35s ease calc((var(--i)) * 0.04s);
+  }
+  header.scrolled .dm-item {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  .dm-item:last-child {
+    border-right: none;
+  }
+
+  .dm-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(99, 102, 241, 0.05);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .dm-item:hover::before {
+    opacity: 1;
+  }
+
+  .dm-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, #6366f1, #0ea5e9);
+    transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .dm-item:hover::after {
+    width: 100%;
+  }
+
+  .dm-num {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-dimmer);
+    min-width: 1.5rem;
+    transition: color 0.2s ease;
+    align-self: flex-start;
+    padding-top: 2px;
+  }
+  .dm-item:hover .dm-num {
+    color: rgba(99, 102, 241, 0.6);
+  }
+
+  .dm-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dm-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+  .dm-item:hover .dm-label {
+    color: var(--accent);
+  }
+
+  .dm-desc {
+    font-size: 0.65rem;
+    color: var(--text-dimmer);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+  .dm-item:hover .dm-desc {
+    color: var(--text-dim);
+  }
+
+  .dm-arrow {
+    width: 0.85rem;
+    height: 0.85rem;
+    color: var(--text-dimmer);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px;
+    transition:
+      color 0.2s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .dm-item:hover .dm-arrow {
+    color: #a5b4fc;
+    transform: translate(3px, -3px);
+  }
+
+  #overlay-menu .overlay-inner {
+    padding: 1rem 6vw 3rem;
+  }
+
+  .nav-link.active {
+    color: var(--text);
+  }
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    header .container .gap-3 {
+      gap: 30vw !important;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .nav-link {
+      padding-bottom: 0px;
+    }
+
+    header .container .gap-6 {
+      gap: 1rem !important;
+    }
+  }
+</style>
+
+<script>
+  const html = document.documentElement;
+  const checkbox = document.getElementById('theme-checkbox') as HTMLInputElement;
+
+  function applyTheme(theme: string) {
+    const metaTheme = document.getElementById('meta-theme-color') as HTMLMetaElement | null;
+    if (theme === 'light') {
+      html.setAttribute('data-theme', 'light');
+      checkbox.checked = true;
+      if (metaTheme) metaTheme.setAttribute('content', '#f8fafc');
+    } else {
+      html.removeAttribute('data-theme');
+      checkbox.checked = false;
+      if (metaTheme) metaTheme.setAttribute('content', '#020617');
+    }
+  }
+
+  const THEME_KEY = document.documentElement.dataset.themeKey || 'portfolio-theme';
+  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+
+  checkbox.addEventListener('change', () => {
+    const next = checkbox.checked ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+  });
+
+  const overlay = document.getElementById('overlay-menu')!;
+  const openBtn = document.getElementById('menu-open-btn')!;
+  const closeBtn = document.getElementById('menu-close-btn')!;
+
+  function openMenu() {
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+
+  overlay.querySelectorAll('.overlay-link, .overlay-quick-link').forEach((a) => {
+    a.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  const header = document.querySelector('header')!;
+  // ticking prevents queuing more than one rAF per scroll event, avoiding layout thrash.
+  let ticking = false;
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (window.innerWidth >= 1024) {
+          header.classList.toggle('scrolled', window.scrollY > 40);
+        } else {
+          header.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  // rootMargin shrinks the detection zone to the middle 5% of the viewport height.
+  // A section is only "active" when it dominates the visible area, not just when any pixel enters view.
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('active'));
+          document.querySelector(`.nav-link[href="#${entry.target.id}"]`)?.classList.add('active');
+        }
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px' }
+  );
+
+  sections.forEach((s) => io.observe(s));
+</script>

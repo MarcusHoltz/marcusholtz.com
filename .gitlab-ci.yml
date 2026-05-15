@@ -1,0 +1,33 @@
+image: node:24-alpine
+
+pages:
+  stage: deploy
+  script:
+    - npm install -g pnpm@11 --silent
+    - pnpm install
+    - |
+      # CI_PAGES_URL is set by the GitLab runner to the full URL this project's
+      # Pages will be served at (e.g. https://user.gitlab.io/project-name).
+      # Derive BASE_PATH and SITE_URL from it when not set as CI/CD variables.
+      if [ -z "$SITE_URL" ]; then
+        export SITE_URL="$CI_PAGES_URL"
+      fi
+      if [ -z "$BASE_PATH" ]; then
+        PAGES_PATH=$(echo "$CI_PAGES_URL" | sed 's|https://[^/]*||' | sed 's|/$||')
+        if [ -z "$PAGES_PATH" ]; then
+          export BASE_PATH="/"
+        else
+          export BASE_PATH="${PAGES_PATH}/"
+        fi
+      fi
+    - pnpm run build
+    - cp -r dist/. public
+  artifacts:
+    paths:
+      - public
+  # Manual trigger: go to CI/CD → Pipelines → Run pipeline in GitLab,
+  # then click the play button next to the "pages" job.
+  # Uncomment the lines below to automatically deploy on every push to main:
+  # only:
+  #   - main
+  when: manual

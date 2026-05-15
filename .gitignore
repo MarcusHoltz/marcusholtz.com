@@ -1,0 +1,120 @@
+#astro build stuff
+.astro
+
+# build output
+dist/
+.output/
+output/
+
+# secrets — never commit
+secrets/
+
+# downloaded at build time — do not commit
+public/fonts/
+
+# dependencies
+node_modules/
+
+# npm to pnmp
+.pnpm-store
+
+# github image cache — generated at build time
+src/data/github-image-cache.json
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.local
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# Editor directories and files
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# AI LLM Tool Directories
+
+# Anthropic / Claude
+.claude/
+
+# OpenAI / ChatGPT / Codex
+.openai/
+
+# GitHub Copilot
+.github/copilot/
+.copilot/
+
+# Cursor
+.cursor/
+.cursorignore
+.cursorindexingignore
+
+# Codeium
+.codeium/
+
+# Tabnine
+.tabnine/
+
+# Amazon CodeWhisperer / Q Developer
+.aws/amazonq/
+.amazonq/
+
+# Google Gemini / Duet AI
+.gemini/
+
+# Cody (Sourcegraph)
+.cody/
+
+# Continue.dev
+.continue/
+
+# Aider
+.aider/
+.aider.tags.cache.v3/
+.aider.chat.history.md
+.aider.input.history
+
+# Windsurf (Codeium)
+.windsurf/
+
+# Zed AI
+.zed/
+
+# Pieces
+.pieces/
+
+# Supermaven
+.supermaven/
+
+# Replit AI
+.replit/
+replit.nix
+
+# v0 (Vercel)
+.v0/
+
+# Bolt (StackBlitz)
+.bolt/
+
+# Devin
+.devin/
+
+# Sweep AI
+.sweep/
+
+# Copilot4PRs / CodeRabbit
+.coderabbit/
+.coderabbit.yaml

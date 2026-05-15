@@ -1,0 +1,13 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "exclude": ["public"],
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

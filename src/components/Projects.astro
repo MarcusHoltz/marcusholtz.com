@@ -1,0 +1,10 @@
+---
+import projectsData from '../data/projects.json';
+import ProjectsGrid from './ProjectsGrid.astro';
+import ProjectsShowcase from './ProjectsShowcase.astro';
+---
+
+{projectsData.layout === 'showcase'
+  ? <ProjectsShowcase />
+  : <ProjectsGrid />
+}

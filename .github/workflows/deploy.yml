@@ -1,0 +1,95 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Manual trigger:
+  #
+  # Hey! Did you want to run this and make/build your site?
+  # Go to Actions. The workflow is set for manual trigger.
+  # Actions → Deploy to GitHub Pages (button on left side)
+  # Run workflow (button on right side) → Run workflow
+  # Congratulations on your new website!
+
+  workflow_dispatch:
+
+  # Auto-deploy:
+  #
+  # If you'd rather have the site rebuild and redeploy automatically
+  # every time you push a change, uncomment the three lines below.
+  # Just remove the leading '#' from each of the three lines.
+  #
+  #push:
+  #  branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Resolve base path
+        run: |
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          if [ -n "${{ vars.BASE_PATH }}" ]; then
+            echo "BASE_PATH=${{ vars.BASE_PATH }}" >> $GITHUB_ENV
+          elif [ "${REPO,,}" = "${OWNER,,}.github.io" ]; then
+            echo "BASE_PATH=/" >> $GITHUB_ENV
+          else
+            echo "BASE_PATH=/${REPO}/" >> $GITHUB_ENV
+          fi
+          if [ -n "${{ vars.SITE_URL }}" ]; then
+            echo "SITE_URL=${{ vars.SITE_URL }}" >> $GITHUB_ENV
+          elif [ "${REPO,,}" = "${OWNER,,}.github.io" ]; then
+            echo "SITE_URL=https://${OWNER}.github.io" >> $GITHUB_ENV
+          else
+            echo "SITE_URL=https://${OWNER}.github.io/${REPO}" >> $GITHUB_ENV
+          fi
+
+      - name: Build
+        run: pnpm run build
+        env:
+          SITE_URL: ${{ env.SITE_URL }}
+          BASE_PATH: ${{ env.BASE_PATH }}
+          GITHUB_USER: ${{ vars.GITHUB_USER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

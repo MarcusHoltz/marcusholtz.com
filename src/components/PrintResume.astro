@@ -1,0 +1,276 @@
+---
+import personal from '../data/personal.json';
+import skillsData from '../data/skills.json';
+import certsData from '../data/certifications.json';
+import expertiseFile from '../data/expertise.json';
+import projectsFile from '../data/projects.json';
+const expertiseData = expertiseFile.items;
+const resumeProjects = projectsFile.items.filter(p => (p as any).resume);
+
+const earnedCerts = certsData.filter(c => c.status === 'Earned');
+const inProgressCerts = certsData.filter(c => c.status !== 'Earned');
+---
+
+<div class="print-only" id="resume-print">
+
+  <header class="resume-header">
+    <div class="header-left">
+      <h1 class="resume-name">{personal.name}</h1>
+      <p class="resume-title">{personal.title}</p>
+    </div>
+    <div class="header-right">
+      <div>{personal.email} · {personal.phone}</div>
+      <div>{personal.location}</div>
+      <div>linkedin.com/in/{personal.linkedin} · github.com/{personal.github}</div>
+    </div>
+  </header>
+
+  <hr class="header-rule" />
+
+  <section class="resume-section">
+    <h2 class="section-title">Summary</h2>
+    <p class="body-text">{personal.bio}</p>
+  </section>
+
+  <section class="resume-section">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      {skillsData.categories.map(category => (
+        <div class="skill-row">
+          <span class="skill-category">{category.title}</span>
+          <span class="skill-items">{category.skills.map(s => s.name).join(' · ')}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="resume-section">
+    <h2 class="section-title">Areas of Expertise</h2>
+    <p class="body-text">{expertiseData.map(e => e.title).join('  ·  ')}</p>
+  </section>
+
+  <section class="resume-section">
+    <h2 class="section-title">Certifications</h2>
+    <div class="cert-list">
+      {earnedCerts.map(cert => (
+        <span class="cert-item cert-earned">
+          <span class="cert-mark">✓</span>{cert.name}
+        </span>
+      ))}
+      {inProgressCerts.map(cert => (
+        <span class="cert-item cert-planned">
+          <span class="cert-mark">○</span>{cert.name} — {cert.date}
+        </span>
+      ))}
+    </div>
+  </section>
+
+  <section class="resume-section">
+    <h2 class="section-title">Notable Projects</h2>
+    <div class="projects-list">
+      {resumeProjects.map(project => project && (
+        <div class="project-item">
+          <div class="project-header">
+            <span class="project-title">{project.title}</span>
+            <span class="project-tags">{project.tags.slice(0, 4).join(' · ')}</span>
+          </div>
+          <p class="project-desc">{project.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="resume-footer-row">
+    <section class="resume-section">
+      <h2 class="section-title">Education</h2>
+      <p class="body-text">{personal.education}</p>
+    </section>
+
+    <section class="resume-section">
+      <h2 class="section-title">Volunteer</h2>
+      <p class="body-text">{personal.volunteer}</p>
+    </section>
+  </div>
+
+</div>
+
+<style>
+  #resume-print {
+    font-family: 'Inter', 'Calibri', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    color: #000;
+    background: #fff;
+    max-width: 100%;
+  }
+
+  .resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .header-left {
+    flex: 1;
+  }
+
+  .resume-name {
+    font-size: 22pt;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.1;
+    margin: 0 0 3px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .resume-title {
+    font-size: 11pt;
+    color: #111;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .header-right {
+    text-align: right;
+    font-size: 9.5pt;
+    color: #111;
+    line-height: 1.7;
+    padding-top: 4px;
+  }
+
+  .header-rule {
+    border: none;
+    border-top: 2px solid #000;
+    margin: 6px 0;
+  }
+
+  .resume-section {
+    margin-bottom: 9px;
+  }
+
+  h2.section-title, .section-title {
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000 !important;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.8) !important;
+    border-bottom: 2.5px solid #000 !important;
+    padding-bottom: 2px;
+    margin: 0 0 5px 0;
+  }
+
+  .body-text {
+    margin: 0;
+    font-size: 10pt;
+    color: #000;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    gap: 2px 0;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: 0 6px;
+    font-size: 9.5pt;
+    line-height: 1.55;
+  }
+
+  .skill-category {
+    font-weight: 600;
+    color: #000;
+  }
+
+  .skill-items {
+    color: #111;
+  }
+
+  /* Certifications */
+  .cert-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 20px;
+    font-size: 9.5pt;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .cert-mark {
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .cert-earned .cert-mark {
+    color: #000;
+  }
+
+  .cert-earned {
+    color: #000;
+    font-weight: 500;
+  }
+
+  .cert-planned .cert-mark {
+    color: #222;
+  }
+
+  .cert-planned {
+    color: #222;
+    font-weight: 400;
+  }
+
+  /* Projects */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .project-item {
+    page-break-inside: avoid;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .project-title {
+    font-weight: 600;
+    font-size: 10pt;
+    color: #000;
+    white-space: nowrap;
+  }
+
+  .project-tags {
+    font-size: 8.5pt;
+    color: #222;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .project-desc {
+    margin: 1px 0 0 0;
+    font-size: 9pt;
+    color: #111;
+    padding-left: 10px;
+    line-height: 1.4;
+  }
+
+  /* Education + Volunteer side by side */
+  .resume-footer-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+</style>

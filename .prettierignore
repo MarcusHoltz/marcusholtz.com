@@ -1,0 +1,78 @@
+secrets/
+output/
+public/
+
+
+# AI LLM Tool Directories
+
+# Anthropic / Claude
+.claude/
+
+# OpenAI / ChatGPT / Codex
+.openai/
+
+# GitHub Copilot
+.github/copilot/
+.copilot/
+
+# Cursor
+.cursor/
+.cursorignore
+.cursorindexingignore
+
+# Codeium
+.codeium/
+
+# Tabnine
+.tabnine/
+
+# Amazon CodeWhisperer / Q Developer
+.aws/amazonq/
+.amazonq/
+
+# Google Gemini / Duet AI
+.gemini/
+
+# Cody (Sourcegraph)
+.cody/
+
+# Continue.dev
+.continue/
+
+# Aider
+.aider/
+.aider.tags.cache.v3/
+.aider.chat.history.md
+.aider.input.history
+
+# Windsurf (Codeium)
+.windsurf/
+
+# Zed AI
+.zed/
+
+# Pieces
+.pieces/
+
+# Supermaven
+.supermaven/
+
+# Replit AI
+.replit/
+replit.nix
+
+# v0 (Vercel)
+.v0/
+
+# Bolt (StackBlitz)
+.bolt/
+
+# Devin
+.devin/
+
+# Sweep AI
+.sweep/
+
+# Copilot4PRs / CodeRabbit
+.coderabbit/
+.coderabbit.yaml

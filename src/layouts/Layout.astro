@@ -1,0 +1,183 @@
+---
+import '../styles/global.css';
+import siteData from '../data/site.json';
+import personalData from '../data/personal.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+// BASE_URL reflects astro.config.mjs `base` (set via BASE_PATH env var).
+// Prepend it to every public/ asset path so the site works when deployed to a sub-directory.
+const base = import.meta.env.BASE_URL;
+const { title = siteData.title, description = siteData.description, ogImage } = Astro.props;
+
+const siteOrigin = Astro.site?.origin ?? personalData.url;
+const canonicalURL = `${siteOrigin}${Astro.url.pathname}`;
+const resolvedOgImage = ogImage ?? `${siteOrigin}${personalData.photo}`;
+const ogImageAlt = `${personalData.name} — ${personalData.heroRole}`;
+
+const sameAsLinks = [
+  personalData.github   && `https://github.com/${personalData.github}`,
+  personalData.linkedin && `https://linkedin.com/in/${personalData.linkedin}`,
+  personalData.gitlab   && `https://gitlab.com/${personalData.gitlab}`,
+  personalData.blog,
+].filter(Boolean) as string[];
+
+const defaultSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${personalData.url}/#person`,
+      name: personalData.name,
+      jobTitle: personalData.title,
+      email: personalData.email,
+      telephone: personalData.phoneTel,
+      url: personalData.url,
+      image: {
+        "@type": "ImageObject",
+        url: `${siteOrigin}${personalData.photo}`,
+        width: 460,
+        height: 460,
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: personalData.addressLocality,
+        addressRegion: personalData.addressRegion,
+        addressCountry: "US",
+      },
+      description: personalData.bio,
+      sameAs: sameAsLinks,
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${personalData.url}/#profile`,
+      name: siteData.title,
+      description: description,
+      url: personalData.url,
+      mainEntity: { "@id": `${personalData.url}/#person` },
+    },
+  ],
+};
+
+function safeJsonLd(obj: object): string {
+  return JSON.stringify(obj).replace(/<\/script>/gi, "<\\/script>");
+}
+---
+
+<!doctype html>
+<html lang="en" style="color-scheme: dark; background: #020617;" data-theme-key={siteData.themeStorageKey}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={siteData.seoKeywords.join(', ')} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content={personalData.name} />
+    <meta name="application-name" content={siteData.ogSiteName} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="geo.region" content={`US-${personalData.addressRegion}`} />
+    <meta name="geo.placename" content={`${personalData.addressLocality}, ${personalData.addressRegion}`} />
+    <meta name="contact" content={personalData.email} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type"         content="website" />
+    <meta property="og:url"          content={canonicalURL} />
+    <meta property="og:title"        content={title} />
+    <meta property="og:description"  content={description} />
+    <meta property="og:image"        content={resolvedOgImage} />
+    <meta property="og:image:width"  content="460" />
+    <meta property="og:image:height" content="460" />
+    <meta property="og:image:alt"    content={ogImageAlt} />
+    <meta property="og:site_name"    content={siteData.ogSiteName} />
+    <meta property="og:locale"       content="en_US" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={resolvedOgImage} />
+    <meta name="twitter:image:alt"   content={ogImageAlt} />
+    {personalData.twitter && <meta name="twitter:site"    content={personalData.twitter} />}
+    {personalData.twitter && <meta name="twitter:creator" content={personalData.twitter} />}
+
+    <!-- Favicon: GIF first so animated-capable browsers prefer it -->
+    <link rel="icon" type="image/gif"  href={`${base}images/favicons/favicon.gif`} />
+    <link rel="icon"                   href={`${base}images/favicons/favicon.ico`} sizes="any" />
+    <link rel="icon" type="image/png" sizes="96x96"  href={`${base}images/favicons/favicon-96x96.png`} />
+    <link rel="icon" type="image/png" sizes="32x32"  href={`${base}images/favicons/favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16"  href={`${base}images/favicons/favicon-16x16.png`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}images/favicons/apple-icon-180x180.png`} />
+    <link rel="apple-touch-icon" sizes="152x152" href={`${base}images/favicons/apple-icon-152x152.png`} />
+    <link rel="apple-touch-icon" sizes="144x144" href={`${base}images/favicons/apple-icon-144x144.png`} />
+    <link rel="apple-touch-icon" sizes="120x120" href={`${base}images/favicons/apple-icon-120x120.png`} />
+    <link rel="apple-touch-icon" sizes="114x114" href={`${base}images/favicons/apple-icon-114x114.png`} />
+    <link rel="apple-touch-icon" sizes="76x76"   href={`${base}images/favicons/apple-icon-76x76.png`} />
+    <link rel="apple-touch-icon" sizes="72x72"   href={`${base}images/favicons/apple-icon-72x72.png`} />
+    <link rel="apple-touch-icon" sizes="60x60"   href={`${base}images/favicons/apple-icon-60x60.png`} />
+    <link rel="apple-touch-icon" sizes="57x57"   href={`${base}images/favicons/apple-icon-57x57.png`} />
+    <link rel="manifest" href={`${base}manifest.json`} />
+    <meta name="msapplication-config" content={`${base}browserconfig.xml`} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#020617" id="meta-theme-color" />
+    <link href={`${base}fonts/inter.css`} rel="stylesheet" />
+    <script is:inline src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer
+    ></script>
+    <title>{title}</title>
+
+    <!-- Schema.org JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={safeJsonLd(defaultSchema)} />
+
+    <!-- Runs synchronously before first paint to apply the saved theme without a flash.
+         is:inline prevents Astro from bundling or deferring this script. -->
+    <script is:inline>
+      (function () {
+        try {
+          var key = document.documentElement.dataset.themeKey || 'portfolio-theme';
+          var t = localStorage.getItem(key);
+          if (t === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.style.background = '#f8fafc';
+            var m = document.getElementById('meta-theme-color');
+            if (m) m.setAttribute('content', '#f8fafc');
+          } else {
+            document.documentElement.style.background = '#020617';
+          }
+        } catch {}
+      })();
+    </script>
+    <!-- Adds .page-hidden to <body> while the tab is not visible.
+         Components can use this class to pause expensive animations. -->
+    <script is:inline>
+      document.addEventListener('visibilitychange', function () {
+        document.body.classList.toggle('page-hidden', document.hidden);
+      });
+    </script>
+    <script is:inline>
+      (function () {
+        var savedTheme = null;
+        window.addEventListener('beforeprint', function () {
+          try {
+            var key = document.documentElement.dataset.themeKey || 'portfolio-theme';
+            savedTheme = localStorage.getItem(key);
+          } catch {}
+          document.documentElement.removeAttribute('data-theme');
+        });
+        window.addEventListener('afterprint', function () {
+          if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          savedTheme = null;
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <slot />
+  </body>
+</html>

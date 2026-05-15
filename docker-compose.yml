@@ -1,0 +1,63 @@
+secrets:
+  github_token_password:
+    file: ./secrets/github_token_password.txt
+
+services:
+  # ── Builder ─────────────────────────────────────────────────────────────────
+  # Default workflow: runs lint → typecheck → build, writes dist/ to ./output
+  # Usage: docker compose build && docker compose up
+  astro-portfolio-theme:
+    build:
+      context: .
+      target: builder
+      network: host
+    container_name: astro-portfolio-theme
+    volumes:
+      - ./output:/app/dist:z
+      - type: tmpfs
+        target: /app/.astro
+        tmpfs:
+          mode: 0777
+    environment:
+      - SITE_URL=https://www.example.com
+      - BASE_PATH=/
+      - GITHUB_USER=your-github-username
+      - HOST_UID=${UID:-1000}
+      - HOST_GID=${GID:-1000}
+    secrets:
+      - github_token_password
+
+  # ── One-shot tooling (profile: tools) ────────────────────────────────────────
+  # Used for migration and maintenance tasks that need pnpm/node but not the full build.
+  # Usage: docker compose --profile tools run --rm pnpm-tools sh -c "<cmd>"
+  pnpm-tools:
+    image: node:24-alpine
+    volumes:
+      - ./:/app:z
+    working_dir: /app
+    environment:
+      - HOST_UID=${UID:-1000}
+      - HOST_GID=${GID:-1000}
+    profiles:
+      - tools
+
+  # ── Nginx server ─────────────────────────────────────────────────────────────
+  # Optional: bakes dist/ into a lean nginx image and serves it.
+  # Use this on your production machine instead of copying files manually.
+  # Usage: docker compose --profile serve build && docker compose --profile serve up -d
+  astro-serve:
+    build:
+      context: .
+      target: server
+      secrets:
+        - github_token_password
+    container_name: astro-serve
+    ports:
+      - '80:80'
+    restart: unless-stopped
+    environment:
+      - SITE_URL=https://www.example.com
+      - BASE_PATH=/
+      - GITHUB_USER=your-github-username
+    profiles:
+      - serve

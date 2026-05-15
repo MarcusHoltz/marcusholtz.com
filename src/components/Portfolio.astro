@@ -1,0 +1,1175 @@
+---
+import portfolioData from '../data/portfolio.json';
+import { withBase } from '../lib/assetPath';
+
+const categories = ['All', ...Array.from(new Set(portfolioData.map((p) => p.category)))];
+
+const categoryColors: Record<string, string> = {
+  Technology: '#6366f1',
+  Legal: '#0ea5e9',
+  Tourism: '#10b981',
+  Municipalities: '#f59e0b',
+  Manufacturing: '#ef4444',
+  Retail: '#ec4899',
+  'Non-Profits': '#7c3aed',
+  SEO: '#14b8a6',
+};
+
+const portfolioDataForClient = portfolioData.map((p) => ({
+  ...p,
+  images: p.images.map((img) => withBase(img)),
+}));
+---
+
+<section id="portfolio" class="py-24" style="scroll-margin-top: 80px;">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <p class="text-sm font-semibold tracking-widest text-highlight uppercase mb-3">
+        My portfolio
+      </p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold section-title">Portfolio</h2>
+      <p class="mt-4 text-base max-w-xl mx-auto" style="color: var(--text-muted);">
+        Projects across different fields and clients.
+      </p>
+    </div>
+
+    <div class="filter-bar reveal" style="transition-delay: 0.1s;">
+      {
+        categories.map((cat) => (
+          <button
+            class={`pf-filter-btn ${cat === 'All' ? 'active' : ''}`}
+            data-filter={cat}
+            style={
+              cat !== 'All' && cat in categoryColors ? `--cat-color: ${categoryColors[cat]}` : ''
+            }
+          >
+            {cat}
+            <span class="pf-filter-count">
+              {cat === 'All'
+                ? portfolioData.length
+                : portfolioData.filter((p) => p.category === cat).length}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="portfolio-grid reveal" style="transition-delay: 0.2s;" id="portfolio-grid">
+      {
+        portfolioData.map((project, i) => (
+          <div
+            class="portfolio-card"
+            data-category={project.category}
+            data-index={i}
+            style={`--color: ${categoryColors[project.category] ?? '#6366f1'}; --delay: ${i * 0.04}s`}
+            role="button"
+            tabindex="0"
+            aria-label={`View ${project.title} screenshots`}
+          >
+            <div class="portfolio-img-wrap">
+              <img
+                src={withBase(project.images[0])}
+                alt={project.title}
+                class="portfolio-img"
+                loading="lazy"
+                width="560"
+                height="350"
+              />
+              <div class="portfolio-overlay">
+                <div class="portfolio-overlay-content">
+                  <h3 class="portfolio-overlay-title">{project.title}</h3>
+                  <p class="portfolio-overlay-desc">{project.description}</p>
+                  <div class="portfolio-overlay-actions">
+                    <button
+                      class="portfolio-view-btn"
+                      data-project={i}
+                      aria-label={`View ${project.title} project`}
+                    >
+                      <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                        <circle cx="12" cy="12" r="3" fill="none" />
+                      </svg>
+                      View Screens
+                    </button>
+                    {project.images.length > 1 && (
+                      <span class="portfolio-screen-pill">{project.images.length} screens</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <span class="portfolio-badge">{project.category}</span>
+            </div>
+            <div class="portfolio-footer">
+              <span class="portfolio-title">{project.title}</span>
+              <span class="portfolio-img-count">
+                {project.images.length > 1 ? `${project.images.length} screens` : '1 screen'}
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<div
+  id="portfolio-modal"
+  class="modal-backdrop"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Project viewer"
+>
+  <div class="modal-box">
+    <div class="modal-topbar">
+      <div class="modal-topbar-left">
+        <span id="pf-modal-badge" class="modal-cat-badge"></span>
+        <span id="pf-modal-title" class="modal-title"></span>
+      </div>
+      <div class="modal-topbar-right">
+        <div class="zoom-controls" aria-label="Zoom controls">
+          <button
+            id="pf-zoom-out"
+            class="zoom-btn"
+            aria-label="Zoom out"
+            title="Zoom out (−)"
+            disabled
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7"></circle><path
+                stroke-linecap="round"
+                d="M21 21l-4.35-4.35M8 11h6"></path>
+            </svg>
+          </button>
+          <span id="pf-zoom-level" class="zoom-level-label">1×</span>
+          <button id="pf-zoom-in" class="zoom-btn" aria-label="Zoom in" title="Zoom in (+)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7"></circle><path
+                stroke-linecap="round"
+                d="M21 21l-4.35-4.35M11 8v6M8 11h6"></path>
+            </svg>
+          </button>
+          <button
+            id="pf-zoom-reset"
+            class="zoom-btn zoom-reset"
+            aria-label="Reset zoom"
+            title="Reset zoom (R)"
+            style="display:none"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <button id="pf-modal-close" class="modal-close-btn" aria-label="Close lightbox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-img-area" id="pf-img-viewport">
+      <div class="modal-img-stage" id="pf-img-stage">
+        <img id="pf-modal-img" src="" alt="" class="modal-img" draggable="false" />
+      </div>
+
+      <button id="pf-modal-prev" class="modal-nav modal-nav-prev" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <button id="pf-modal-next" class="modal-nav modal-nav-next" aria-label="Next image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+
+      <div id="pf-zoom-hint" class="zoom-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+          <circle cx="11" cy="11" r="7"></circle><path
+            stroke-linecap="round"
+            d="M21 21l-4.35-4.35M11 8v6M8 11h6"></path>
+        </svg>
+        Scroll or use +/− to zoom · Drag to pan
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-caption-wrap">
+        <p id="pf-modal-caption" class="modal-caption"></p>
+      </div>
+      <div class="modal-strip-wrap">
+        <div id="pf-modal-dots" class="modal-strip"></div>
+        <span id="pf-modal-counter" class="modal-counter"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .pf-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  .pf-filter-btn:hover {
+    color: var(--text);
+    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(99, 102, 241, 0.06);
+    transform: translateY(-1px);
+  }
+  .pf-filter-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .pf-filter-btn.active {
+    color: #fff;
+    background: #6366f1;
+    border-color: transparent;
+  }
+
+  .pf-filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .pf-filter-btn.active .pf-filter-count {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .portfolio-card {
+    border-radius: 0.875rem;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition:
+      transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.35s ease,
+      border-color 0.3s ease,
+      opacity 0.3s ease;
+    cursor: pointer;
+  }
+  .portfolio-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.25),
+      0 0 0 1px var(--color);
+    border-color: var(--color);
+  }
+  .portfolio-card.hidden-card {
+    display: none;
+  }
+  .portfolio-card:focus-visible {
+    outline: 2px solid var(--color, #6366f1);
+    outline-offset: 2px;
+  }
+
+  .portfolio-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .portfolio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translateX(78px) scale(1.6);
+    transition: transform 0.75s ease-in;
+  }
+  .portfolio-card:hover .portfolio-img {
+    transform: translate(60px) scale(1.1);
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #020617, #020617d4 45%, #0206171a);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25rem 1.25rem 3.25rem 1.25rem;
+    height: calc(100% + 2rem);
+    transition: background 200ms ease;
+  }
+
+  .portfolio-overlay:hover {
+    background: linear-gradient(to top, #020617ad, #02061757 30%, #02061700);
+  }
+
+  .portfolio-overlay-content {
+    width: 100%;
+  }
+
+  .portfolio-overlay-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  .portfolio-overlay-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .portfolio-overlay-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .portfolio-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.75);
+    border: 1px solid rgba(99, 102, 241, 0.9);
+    color: #fff;
+    backdrop-filter: blur(4px);
+    transition:
+      background 0.2s ease,
+      transform 0.15s ease;
+    cursor: pointer;
+  }
+  .portfolio-view-btn:hover {
+    background: rgba(99, 102, 241, 1);
+    transform: scale(1.04);
+  }
+
+  .portfolio-screen-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .portfolio-screen-pill {
+    display: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .portfolio-overlay:hover .portfolio-screen-pill {
+    opacity: 1;
+    display: inline-flex;
+  }
+
+  .portfolio-badge {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    padding: 0.18rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .portfolio-card:hover .portfolio-badge {
+    background: var(--color);
+    border-color: transparent;
+  }
+
+  .portfolio-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .portfolio-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .portfolio-img-count {
+    font-size: 0.68rem;
+    color: var(--text-dimmer);
+    font-weight: 500;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(2, 6, 23, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  .modal-backdrop.open {
+    opacity: 1;
+    pointer-events: all;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .modal-box {
+    position: relative;
+    background: var(--bg-card-solid);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1400px;
+    height: calc(100vh - 1.5rem);
+    max-height: 960px;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+    transform: scale(0.96) translateY(12px);
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-backdrop.open .modal-box {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .modal-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .modal-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .modal-cat-badge {
+    display: inline-block;
+    padding: 0.18rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .modal-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .zoom-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
+  }
+  .zoom-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+  .zoom-btn:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.2);
+    color: #fff;
+  }
+  .zoom-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .zoom-level-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 2.4ch;
+    text-align: center;
+    user-select: none;
+  }
+
+  .modal-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+  .modal-close-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .modal-close-btn:hover {
+    background: rgba(239, 68, 68, 0.35);
+    color: #fff;
+    border-color: rgba(239, 68, 68, 0.5);
+  }
+  .modal-close-btn:focus-visible,
+  .modal-nav:focus-visible,
+  .zoom-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .modal-img-area {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    background: #000;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .modal-img-area {
+    background: oklch(44.6% 0.043 257.281) !important;
+  }
+
+  .modal-img-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: 0 0;
+    cursor: zoom-in;
+  }
+  .modal-img-stage.zoomed {
+    cursor: grab;
+  }
+  .modal-img-stage.dragging {
+    cursor: grabbing;
+    transition: none !important;
+  }
+
+  .modal-img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .modal-img.loading {
+    opacity: 0.3;
+  }
+
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      opacity 0.2s ease;
+    z-index: 10;
+  }
+  .modal-nav svg {
+    width: 20px;
+    height: 20px;
+  }
+  .modal-nav:hover {
+    background: rgba(99, 102, 241, 0.6);
+  }
+  .modal-nav:disabled {
+    opacity: 0.2;
+    cursor: default;
+    pointer-events: none;
+  }
+  .modal-nav-prev {
+    left: 0.75rem;
+  }
+  .modal-nav-next {
+    right: 0.75rem;
+  }
+
+  .zoom-hint {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .zoom-hint.visible {
+    opacity: 1;
+  }
+
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border);
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .modal-caption-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .modal-caption {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal-strip-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .modal-strip {
+    display: flex;
+    gap: 5px;
+  }
+
+  .modal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-dimmer);
+    transition:
+      background 0.2s ease,
+      width 0.2s ease;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .modal-dot:hover {
+    background: var(--text-muted);
+  }
+  .modal-dot.active {
+    background: #6366f1;
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  .modal-counter {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-dimmer);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+</style>
+
+<script is:inline define:vars={{ portfolioData: portfolioDataForClient, categoryColors }}>
+  const projects = portfolioData;
+
+  document.querySelectorAll('.pf-filter-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.pf-filter-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.portfolio-card').forEach((card) => {
+        const match = filter === 'All' || card.dataset.category === filter;
+        card.classList.toggle('hidden-card', !match);
+      });
+    });
+  });
+
+  const modal = document.getElementById('portfolio-modal');
+  const modalImg = document.getElementById('pf-modal-img');
+  const modalStage = document.getElementById('pf-img-stage');
+  const viewport = document.getElementById('pf-img-viewport');
+  const modalTitle = document.getElementById('pf-modal-title');
+  const modalCaption = document.getElementById('pf-modal-caption');
+  const modalCounter = document.getElementById('pf-modal-counter');
+  const modalBadge = document.getElementById('pf-modal-badge');
+  const modalDots = document.getElementById('pf-modal-dots');
+  const prevBtn = document.getElementById('pf-modal-prev');
+  const nextBtn = document.getElementById('pf-modal-next');
+  const closeBtn = document.getElementById('pf-modal-close');
+  const zoomInBtn = document.getElementById('pf-zoom-in');
+  const zoomOutBtn = document.getElementById('pf-zoom-out');
+  const zoomReset = document.getElementById('pf-zoom-reset');
+  const zoomLabel = document.getElementById('pf-zoom-level');
+  const zoomHint = document.getElementById('pf-zoom-hint');
+
+  let currentProject = 0;
+  let currentSlide = 0;
+
+  const MIN_ZOOM = 1;
+  const MAX_ZOOM = 5;
+  let zoom = 1;
+  let panX = 0;
+  let panY = 0;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragOriginPX = 0;
+  let dragOriginPY = 0;
+  let hintTimer = null;
+
+  function getViewportSize() {
+    return { w: viewport.clientWidth, h: viewport.clientHeight };
+  }
+
+  // Prevents the image from being panned so far that empty viewport space appears at any edge.
+  function clampPan(z, px, py) {
+    const { w, h } = getViewportSize();
+    const scaledW = w * z;
+    const scaledH = h * z;
+    const minX = Math.min(0, w - scaledW);
+    const minY = Math.min(0, h - scaledH);
+    return {
+      x: Math.max(minX, Math.min(0, px)),
+      y: Math.max(minY, Math.min(0, py)),
+    };
+  }
+
+  function applyTransform(animate = false) {
+    if (animate) {
+      modalStage.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+    } else {
+      modalStage.style.transition = isDragging ? 'none' : '';
+    }
+    modalStage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    modalStage.classList.toggle('zoomed', zoom > 1);
+
+    zoomInBtn.disabled = zoom >= MAX_ZOOM;
+    zoomOutBtn.disabled = zoom <= MIN_ZOOM;
+    zoomReset.style.display = zoom > 1 ? '' : 'none';
+    zoomLabel.textContent = zoom === Math.round(zoom) ? `${zoom}×` : `${zoom.toFixed(1)}×`;
+  }
+
+  function resetZoom(animate = true) {
+    zoom = 1;
+    panX = 0;
+    panY = 0;
+    applyTransform(animate);
+  }
+
+  // Zoom anchored to a viewport point (vpX, vpY):
+  // 1. Convert the anchor from viewport space to image space using the current transform.
+  // 2. Apply the new zoom.
+  // 3. Recompute the pan so the same image point sits under the anchor (cursor or pinch midpoint).
+  function zoomAt(newZoom, vpX, vpY) {
+    const { w, h } = getViewportSize();
+    vpX = vpX ?? w / 2;
+    vpY = vpY ?? h / 2;
+
+    const imgX = (vpX - panX) / zoom;
+    const imgY = (vpY - panY) / zoom;
+
+    zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newZoom));
+
+    panX = vpX - imgX * zoom;
+    panY = vpY - imgY * zoom;
+
+    const clamped = clampPan(zoom, panX, panY);
+    panX = clamped.x;
+    panY = clamped.y;
+
+    applyTransform();
+  }
+
+  zoomInBtn.addEventListener('click', () => zoomAt(zoom * 1.5, undefined, undefined));
+  zoomOutBtn.addEventListener('click', () => {
+    if (zoom <= 1.01) return;
+    zoomAt(zoom / 1.5, undefined, undefined);
+    if (zoom < 1.05) resetZoom(true);
+  });
+  zoomReset.addEventListener('click', () => resetZoom(true));
+
+  viewport.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault();
+      const rect = viewport.getBoundingClientRect();
+      const vpX = e.clientX - rect.left;
+      const vpY = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom * factor));
+      if (next <= 1.01 && e.deltaY > 0) {
+        resetZoom(true);
+        return;
+      }
+      zoomAt(next, vpX, vpY);
+    },
+    { passive: false }
+  );
+
+  modalStage.addEventListener('click', (e) => {
+    if (isDragging) return;
+    const rect = viewport.getBoundingClientRect();
+    if (zoom <= 1) {
+      zoomAt(2, e.clientX - rect.left, e.clientY - rect.top);
+    } else {
+      resetZoom(true);
+    }
+  });
+
+  modalStage.addEventListener('mousedown', (e) => {
+    if (zoom <= 1) return;
+    e.preventDefault();
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragOriginPX = panX;
+    dragOriginPY = panY;
+    modalStage.classList.add('dragging');
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+    const clamped = clampPan(zoom, dragOriginPX + dx, dragOriginPY + dy);
+    panX = clamped.x;
+    panY = clamped.y;
+    applyTransform();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    modalStage.classList.remove('dragging');
+  });
+
+  // Pinch-to-zoom state: initial finger distance and zoom level captured at touchstart,
+  // plus the midpoint between the two fingers used as the zoom anchor.
+  let touchStartDist = 0;
+  let touchStartZoom = 1;
+  let touchMidX = 0;
+  let touchMidY = 0;
+  // Single-finger pan state while zoomed in.
+  let touchDragStartX = 0;
+  let touchDragStartY = 0;
+  let touchDragOriginX = 0;
+  let touchDragOriginY = 0;
+
+  viewport.addEventListener(
+    'touchstart',
+    (e) => {
+      if (e.touches.length === 2) {
+        const t0 = e.touches[0],
+          t1 = e.touches[1];
+        touchStartDist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        touchStartZoom = zoom;
+        const rect = viewport.getBoundingClientRect();
+        touchMidX = (t0.clientX + t1.clientX) / 2 - rect.left;
+        touchMidY = (t0.clientY + t1.clientY) / 2 - rect.top;
+      } else if (e.touches.length === 1 && zoom > 1) {
+        touchDragStartX = e.touches[0].clientX;
+        touchDragStartY = e.touches[0].clientY;
+        touchDragOriginX = panX;
+        touchDragOriginY = panY;
+      }
+    },
+    { passive: true }
+  );
+
+  viewport.addEventListener(
+    'touchmove',
+    (e) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const t0 = e.touches[0],
+          t1 = e.touches[1];
+        const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        const next = Math.max(
+          MIN_ZOOM,
+          Math.min(MAX_ZOOM, touchStartZoom * (dist / touchStartDist))
+        );
+        zoomAt(next, touchMidX, touchMidY);
+      } else if (e.touches.length === 1 && zoom > 1) {
+        e.preventDefault();
+        const dx = e.touches[0].clientX - touchDragStartX;
+        const dy = e.touches[0].clientY - touchDragStartY;
+        const clamped = clampPan(zoom, touchDragOriginX + dx, touchDragOriginY + dy);
+        panX = clamped.x;
+        panY = clamped.y;
+        applyTransform();
+      }
+    },
+    { passive: false }
+  );
+
+  viewport.addEventListener(
+    'touchend',
+    (e) => {
+      if (e.touches.length < 2 && zoom < 1.05) resetZoom(true);
+    },
+    { passive: true }
+  );
+
+  function openModal(projectIndex, slideIndex = 0) {
+    currentProject = projectIndex;
+    currentSlide = slideIndex;
+    renderModal();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    showZoomHint();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    resetZoom(false);
+    clearTimeout(hintTimer);
+  }
+
+  function showZoomHint() {
+    clearTimeout(hintTimer);
+    zoomHint.classList.add('visible');
+    hintTimer = setTimeout(() => zoomHint.classList.remove('visible'), 3000);
+  }
+
+  function renderModal() {
+    const p = projects[currentProject];
+    const color = categoryColors[p.category] ?? '#6366f1';
+
+    modalBadge.textContent = p.category;
+    modalBadge.style.background = color;
+    modalTitle.textContent = p.title;
+    modalCaption.textContent = p.slides[currentSlide] ?? '';
+
+    modalImg.classList.add('loading');
+    modalImg.onload = () => modalImg.classList.remove('loading');
+    modalImg.src = p.images[currentSlide];
+    modalImg.alt = `${p.title} — ${p.slides[currentSlide] ?? ''}`;
+
+    modalCounter.textContent = `${currentSlide + 1} / ${p.images.length}`;
+
+    modalDots.innerHTML = '';
+    p.images.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = `modal-dot ${i === currentSlide ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `View screen ${i + 1}: ${p.slides[i] ?? ''}`);
+      dot.addEventListener('click', () => {
+        currentSlide = i;
+        resetZoom(false);
+        renderModal();
+      });
+      modalDots.appendChild(dot);
+    });
+
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+
+    resetZoom(false);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    const total = projects[currentProject].images.length;
+    currentSlide = (currentSlide - 1 + total) % total;
+    resetZoom(false);
+    renderModal();
+  });
+  nextBtn.addEventListener('click', () => {
+    const total = projects[currentProject].images.length;
+    currentSlide = (currentSlide + 1) % total;
+    resetZoom(false);
+    renderModal();
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') {
+      const total = projects[currentProject].images.length;
+      currentSlide = (currentSlide - 1 + total) % total;
+      resetZoom(false);
+      renderModal();
+    }
+    if (e.key === 'ArrowRight') {
+      const total = projects[currentProject].images.length;
+      currentSlide = (currentSlide + 1) % total;
+      resetZoom(false);
+      renderModal();
+    }
+    if (e.key === '+' || e.key === '=') zoomAt(zoom * 1.5, undefined, undefined);
+    if (e.key === '-') {
+      zoomAt(zoom / 1.5, undefined, undefined);
+      if (zoom < 1.05) resetZoom(true);
+    }
+    if (e.key === 'r' || e.key === 'R') resetZoom(true);
+  });
+
+  document.querySelectorAll('.portfolio-card').forEach((card) => {
+    card.addEventListener('click', () => openModal(parseInt(card.dataset.index)));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(parseInt(card.dataset.index));
+      }
+    });
+    const viewBtn = card.querySelector('.portfolio-view-btn');
+    if (viewBtn) {
+      viewBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal(parseInt(card.dataset.index));
+      });
+    }
+  });
+
+  document.querySelectorAll('#portfolio .reveal').forEach((el) => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+  });
+</script>

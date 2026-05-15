@@ -1,0 +1,73 @@
+<div class="sd" aria-hidden="true">
+  <div class="sd-pill sd-l"></div>
+  <div class="sd-pill sd-r"></div>
+</div>
+
+<style>
+  .sd {
+    position: relative;
+    width: 100%;
+    height: 52px;
+    overflow: hidden;
+    margin: -5px 0;
+    z-index: 10;
+  }
+
+  .sd-pill {
+    position: absolute;
+    top: 50%;
+    height: 44px;
+    width: 100%;
+    background: #00000017;
+    backdrop-filter: brightness(0.98);
+    transition:
+      transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s ease;
+  }
+
+  /* Pills start invisible only when JS is available. The IntersectionObserver below
+     adds .visible which triggers the slide-in transition. Without JS the pills
+     are always shown (no transition) so the divider is still present. */
+  @media (scripting: enabled) {
+    .sd-pill {
+      opacity: 0;
+    }
+    .sd.visible .sd-l,
+    .sd.visible .sd-r {
+      opacity: 1;
+    }
+  }
+
+  .sd-l {
+    right: 67%;
+    transform: translateX(-115%) translateY(-50%);
+    clip-path: polygon(0 100%, calc(100% - 40px) 100%, 100% 99%, calc(100% - 40px) 0, 0 0);
+  }
+  .sd.visible .sd-l {
+    transform: translateX(0) translateY(-50%);
+  }
+
+  .sd-r {
+    left: 67%;
+    transform: translateX(115%) translateY(-50%);
+    clip-path: polygon(0 1%, 40px 0, 100% 0, 100% 100%, 40px 100%);
+  }
+  .sd.visible .sd-r {
+    transform: translateX(0) translateY(-50%);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.sd').forEach((el) => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    io.observe(el);
+  });
+</script>

@@ -1,0 +1,450 @@
+---
+import personalData from '../data/personal.json';
+import siteData from '../data/site.json';
+import menuData from '../data/menu.json';
+import { getSocialLinks } from '../lib/socialLinks';
+
+const currentYear = new Date().getFullYear();
+const base = import.meta.env.BASE_URL;
+
+const socialLinks = getSocialLinks(personalData as unknown as Record<string, string | string[]>);
+
+const navLinks = menuData.sections.map((s) => ({ label: s.label, href: s.href }));
+
+const { footerAttribution } = siteData;
+---
+
+<footer
+  id="site-footer"
+  style="position: relative; background: var(--footer-bg); border-top: 1px solid var(--footer-border);"
+  data-base={base}
+  data-gif-count={siteData.retroTvCount}
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-14">
+    <div class="footer-grid">
+      <div class="footer-left">
+        <div class="footer-square" id="footer-square">
+          <div class="footer-glitch" data-text={siteData.shortName}>{siteData.shortName}</div>
+        </div>
+
+        <div class="mt-4">
+          <p class="text-lg font-bold gradient-text">{personalData.name}</p>
+          <p class="text-slate-500 text-xs mt-1 leading-relaxed max-w-[220px]">
+            {siteData.tagline}
+          </p>
+          <a href={`mailto:${personalData.email}`} class="footer-email mt-3">
+            <svg
+              class="w-4 h-4 opacity-50 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            {personalData.email}
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-center">
+        <nav class="flex flex-col gap-2" aria-label="Footer navigation">
+          {
+            navLinks.map((link) => (
+              <a href={link.href} class="footer-nav-link">
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+
+      <div class="footer-right">
+        <div class="flex flex-wrap gap-2">
+          {siteData.seoKeywords.map((kw) => <span class="footer-kw">{kw}</span>)}
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider my-8"></div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-slate-600 text-sm">
+        © {currentYear}
+        {personalData.name}
+        {
+          footerAttribution.builder && (
+            <>
+              {' '}
+              · Built by{' '}
+              <a href={footerAttribution.builderUrl} target="_blank">
+                {footerAttribution.builder}
+              </a>
+            </>
+          )
+        }
+        {
+          footerAttribution.host && (
+            <>
+              {' '}
+              / Hosting by{' '}
+              <a href={footerAttribution.hostUrl} target="_blank">
+                {footerAttribution.host}
+              </a>
+            </>
+          )
+        }
+        &nbsp;·&nbsp;<a href="privacy" class="hover:text-accent transition-colors">Privacy</a
+        >&nbsp;·&nbsp;<a href="terms" class="hover:text-accent transition-colors">Terms</a>
+      </p>
+      <div class="flex items-center gap-5">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-social"
+              aria-label={link.label}
+            >
+              <iconify-icon icon={link.icon} width="20" height="20" aria-hidden="true" />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: auto 1fr auto;
+      gap: 3rem;
+    }
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+  }
+  .footer-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-right {
+    text-align: right;
+  }
+
+  @media (max-width: 767px) {
+    .footer-center {
+      text-align: left;
+      align-items: flex-start;
+    }
+    .footer-right {
+      text-align: left;
+    }
+  }
+
+  .footer-square {
+    width: 170px;
+    aspect-ratio: 2/1;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+    background: var(--bg);
+    background-size: 130% auto;
+    background-position: top left;
+    filter: grayscale(55%) brightness(88%);
+    padding: 1.1em 1em 0.5em 1em;
+    cursor: default;
+    transition:
+      filter 0.4s ease,
+      border-color 0.4s ease;
+  }
+  .footer-square:hover {
+    filter: grayscale(20%) brightness(100%);
+    border-color: rgba(99, 102, 241, 0.7);
+  }
+
+  .footer-glitch {
+    color: white;
+    left: -1.925rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    position: relative;
+    display: block;
+    line-height: 1;
+  }
+
+  /* content: attr(data-text) clones the visible text into two pseudo-elements.
+     clip-path is then animated frame-by-frame to create the scanline glitch effect. */
+  .footer-glitch:before,
+  .footer-glitch:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    color: white;
+    background: var(--bg);
+    overflow: hidden;
+    clip-path: inset(0 0 100% 0);
+  }
+  .footer-glitch:before {
+    left: -2px;
+    text-shadow: 1px 0 blue;
+    animation: fg-noise-2 3s infinite linear alternate-reverse;
+    animation-play-state: paused;
+  }
+  .footer-glitch:after {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    animation: fg-noise 2s infinite linear alternate-reverse;
+    animation-play-state: paused;
+  }
+  .footer-glitch:hover:before,
+  .footer-glitch:hover:after {
+    animation-play-state: running;
+  }
+
+  @keyframes fg-noise {
+    0% {
+      clip-path: inset(40px 0 0px 0);
+    }
+    5% {
+      clip-path: inset(13px 0 92px 0);
+    }
+    10% {
+      clip-path: inset(63px 0 3px 0);
+    }
+    15% {
+      clip-path: inset(35px 0 1px 0);
+    }
+    20% {
+      clip-path: inset(50px 0 63px 0);
+    }
+    25% {
+      clip-path: inset(93px 0 95px 0);
+    }
+    30% {
+      clip-path: inset(1px 0 71px 0);
+    }
+    35% {
+      clip-path: inset(71px 0 11px 0);
+    }
+    40% {
+      clip-path: inset(92px 0 67px 0);
+    }
+    45% {
+      clip-path: inset(1px 0 50px 0);
+    }
+    50% {
+      clip-path: inset(55px 0 37px 0);
+    }
+    55% {
+      clip-path: inset(62px 0 24px 0);
+    }
+    60% {
+      clip-path: inset(84px 0 94px 0);
+    }
+    65% {
+      clip-path: inset(20px 0 42px 0);
+    }
+    70% {
+      clip-path: inset(26px 0 56px 0);
+    }
+    75% {
+      clip-path: inset(57px 0 23px 0);
+    }
+    80% {
+      clip-path: inset(12px 0 81px 0);
+    }
+    85% {
+      clip-path: inset(60px 0 66px 0);
+    }
+    90% {
+      clip-path: inset(69px 0 63px 0);
+    }
+    95% {
+      clip-path: inset(69px 0 64px 0);
+    }
+    100% {
+      clip-path: inset(91px 0 0px 0);
+    }
+  }
+
+  @keyframes fg-noise-2 {
+    0% {
+      clip-path: inset(54px 0 87px 0);
+    }
+    5% {
+      clip-path: inset(52px 0 5px 0);
+    }
+    10% {
+      clip-path: inset(64px 0 69px 0);
+    }
+    15% {
+      clip-path: inset(58px 0 27px 0);
+    }
+    20% {
+      clip-path: inset(54px 0 60px 0);
+    }
+    25% {
+      clip-path: inset(22px 0 94px 0);
+    }
+    30% {
+      clip-path: inset(29px 0 21px 0);
+    }
+    35% {
+      clip-path: inset(1px 0 0px 0);
+    }
+    40% {
+      clip-path: inset(75px 0 95px 0);
+    }
+    45% {
+      clip-path: inset(27px 0 9px 0);
+    }
+    50% {
+      clip-path: inset(1px 0 94px 0);
+    }
+    55% {
+      clip-path: inset(77px 0 31px 0);
+    }
+    60% {
+      clip-path: inset(65px 0 76px 0);
+    }
+    65% {
+      clip-path: inset(75px 0 9px 0);
+    }
+    70% {
+      clip-path: inset(56px 0 36px 0);
+    }
+    75% {
+      clip-path: inset(43px 0 29px 0);
+    }
+    80% {
+      clip-path: inset(26px 0 28px 0);
+    }
+    85% {
+      clip-path: inset(94px 0 91px 0);
+    }
+    90% {
+      clip-path: inset(66px 0 63px 0);
+    }
+    95% {
+      clip-path: inset(86px 0 11px 0);
+    }
+    100% {
+      clip-path: inset(46px 0 8px 0);
+    }
+  }
+
+  .footer-nav-link {
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    position: relative;
+    display: inline-block;
+  }
+  .footer-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, #6366f1, #0ea5e9);
+    transition: width 0.3s ease;
+  }
+  .footer-nav-link:hover {
+    color: #a5b4fc;
+  }
+  .footer-nav-link:hover::after {
+    width: 100%;
+  }
+
+  .footer-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  .footer-email:hover {
+    color: #a5b4fc;
+  }
+
+  .footer-kw {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: #334155;
+    background: rgba(99, 102, 241, 0.04);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    border-radius: 9999px;
+    padding: 0.18rem 0.6rem;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease;
+    cursor: default;
+  }
+  .footer-kw:hover {
+    color: #6366f1;
+    border-color: rgba(99, 102, 241, 0.3);
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(99, 102, 241, 0.4) 25%,
+      rgba(14, 165, 233, 0.4) 75%,
+      transparent 100%
+    );
+  }
+
+  .footer-social {
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .footer-social:hover {
+    color: #a5b4fc;
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  // base and gifCount are read from data attributes rather than hardcoded so this script
+  // works correctly regardless of the site's BASE_PATH deployment sub-directory.
+  const footer = document.getElementById('site-footer') as HTMLElement | null;
+  const base = footer?.dataset.base ?? '/';
+  const count = parseInt(footer?.dataset.gifCount ?? '21', 10);
+  const gifs = Array.from(
+    { length: count },
+    (_, i) => `${base}images/retro-tv/bgtv_(${i + 1}).gif`
+  );
+  // Pick a different retro TV gif on each page load.
+  const pick = gifs[Math.floor(Math.random() * gifs.length)];
+  const sq = document.getElementById('footer-square') as HTMLElement | null;
+  if (sq) {
+    sq.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.82)), url('${pick}')`;
+  }
+</script>

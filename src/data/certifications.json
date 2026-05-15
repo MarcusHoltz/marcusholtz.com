@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Google UX Design Certificate",
+    "issuer": "Google / Coursera",
+    "date": "May 2026",
+    "status": "Earned",
+    "type": "certification",
+    "description": "Seven-course program covering UX research, wireframing, prototyping, and usability testing. Emphasis on human-centered design principles and building accessible, inclusive user experiences.",
+    "credentialUrl": ""
+  },
+  {
+    "name": "Freelance Business Foundations",
+    "issuer": "CreativeLive",
+    "date": "December 2025",
+    "status": "Earned",
+    "type": "certification",
+    "description": "Business-side program covering client acquisition, proposal writing, contracts, pricing strategy, and scope management. A practical toolkit for running an independent creative practice.",
+    "credentialUrl": ""
+  },
+  {
+    "name": "Motion Design with After Effects",
+    "issuer": "School of Motion",
+    "date": "August 2024",
+    "status": "Completed",
+    "type": "professional-development",
+    "description": "Motion principles, keyframe animation, easing curves, and compositing applied to title sequences, UI animations, and explainer video production.",
+    "credentialUrl": ""
+  },
+  {
+    "name": "3D Art for Real-Time Engines",
+    "issuer": "Unity Learn / Epic Games",
+    "date": "Target: Q3 2027",
+    "status": "In Progress",
+    "type": "in-progress",
+    "description": "Bridging offline rendering knowledge with real-time constraints — optimizing assets, baking maps, and building environments in Unreal Engine for interactive and immersive projects.",
+    "credentialUrl": ""
+  },
+  {
+    "name": "Creative Coding & Generative AI",
+    "issuer": "Domestika / Runway",
+    "date": "Target: 2028",
+    "status": "In Progress",
+    "type": "in-progress",
+    "description": "Exploring the intersection of code, generative models, and visual art — building interactive installations, AI-assisted design tools, and procedural media for web and physical spaces.",
+    "credentialUrl": ""
+  }
+]

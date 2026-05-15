@@ -1,0 +1,87 @@
+{
+  "layout": "grid",
+  "items": [
+    {
+      "title": "Open Source Portfolio Template",
+      "featured": true,
+      "resume": true,
+      "company": "Community",
+      "category": "webdev",
+      "description": "The template you're looking at right now. Built with Astro, fully data-driven, and designed to be claimed by anyone. Fork it, fill it, ship it. All placeholder content is waiting for yours.",
+      "tags": ["Astro", "TypeScript", "Tailwind CSS", "Open Source", "Template"],
+      "icon": "command-line",
+      "sliderImage": "/images/projects/use-astro2.jpg",
+      "sliderOrder": 1,
+      "backgroundImage": "/images/projects/use-astro3.jpg",
+      "images": [
+        "/images/projects/use-astro1.jpg",
+        "/images/projects/use-astro2.jpg",
+        "/images/projects/use-astro3.jpg"
+      ],
+      "link": "",
+      "colorIcon": "devicon:astro",
+      "githubRepo": "portfolio-template"
+    },
+    {
+      "title": "3D Environment Study",
+      "featured": true,
+      "resume": true,
+      "company": "Personal Work",
+      "category": "blender",
+      "description": "A series of Blender scenes exploring lighting, texture, and atmosphere — no narrative, just craft. Rendered in Cycles, post-processed in Photoshop, shared as a study in patience and iteration.",
+      "tags": ["Blender", "3D Modeling", "Lighting", "Cycles Render", "Photoshop"],
+      "icon": "cpu-chip",
+      "sliderImage": "/images/projects/blender-mockup2.jpg",
+      "sliderOrder": 2,
+      "backgroundImage": "/images/projects/blender-mockup1.jpg",
+      "images": [
+        "/images/projects/blender-mockup1.jpg",
+        "/images/projects/blender-mockup2.jpg",
+        "/images/projects/blender-mockup3.jpg"
+      ],
+      "link": "",
+      "colorIcon": "devicon:blender",
+      "githubRepo": ""
+    },
+    {
+      "title": "Personal Design System",
+      "featured": true,
+      "company": "Side Project",
+      "category": "design",
+      "description": "A living component library built for personal and freelance use. Design tokens, reusable components, and documentation that travel from project to project — no starting from scratch every time.",
+      "tags": ["Figma", "CSS", "TypeScript", "Design Systems", "Component Library"],
+      "icon": "document-text",
+      "sliderImage": "/images/projects/design-library3.jpg",
+      "sliderOrder": 4,
+      "backgroundImage": "/images/projects/design-library2.jpg",
+      "images": [
+        "/images/projects/design-library1.jpg",
+        "/images/projects/design-library2.jpg",
+        "/images/projects/design-library3.jpg"
+      ],
+      "link": "",
+      "colorIcon": "devicon:figma",
+      "githubRepo": "design-system"
+    },
+    {
+      "title": "Photography Workflow App",
+      "resume": true,
+      "company": "Side Project",
+      "category": "appdev",
+      "description": "A lightweight local web app for managing shoot intake, selects, and client delivery — replacing a patchwork of folders, spreadsheets, and emails with a single tool built for the way I work.",
+      "tags": ["React", "SQLite", "Photography", "Workflow", "Node.js"],
+      "icon": "eye",
+      "sliderImage": "/images/projects/web-app2.jpg",
+      "sliderOrder": 3,
+      "backgroundImage": "/images/projects/web-app3.jpg",
+      "images": [
+        "/images/projects/web-app1.jpg",
+        "/images/projects/web-app2.jpg",
+        "/images/projects/web-app3.jpg"
+      ],
+      "link": "",
+      "colorIcon": "devicon:react",
+      "githubRepo": "photo-workflow"
+    }
+  ]
+}

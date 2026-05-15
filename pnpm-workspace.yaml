@@ -1,0 +1,75 @@
+# pnpm 11 configuration — all pnpm settings must live here, not in .npmrc
+
+# Override transitive dependency versions (replaces npm's package.json "overrides" field)
+overrides:
+  vite: "7.3.2"
+  # devalue >=5.6.3 <=5.8.0 has GHSA-77vg-94rm-hx3p (DoS via sparse array deserialization).
+  # Astro pulls it in as a transitive dep. Force the patched version.
+  devalue: ">=5.8.1"
+
+# ── Supply chain security ─────────────────────────────────────────────────────
+
+# Minimum age (minutes) a package version must have before pnpm resolves it.
+# 10080 = 7 days — provides a full week review window before any new version
+# enters the dependency tree. Covers all known 2025-2026 attack windows and
+# gives operators time to review advisories before the weekly update run.
+minimumReleaseAge: 10080
+
+# Versions exempt from the age requirement. Add entries here only for emergency
+# security patches where waiting 1 week is unacceptable (e.g. a hot CVE fix).
+# Format: - "package@version"  OR  - "@scope/package@version"
+minimumReleaseAgeExclude:
+  # devalue@5.8.1 patches GHSA-77vg-94rm-hx3p (DoS via sparse array). Published
+  # 2026-05-14 — explicitly exempted from the 1-week hold so the security fix installs.
+  # Remove this entry once devalue@5.8.1 is > 7 days old.
+  - "devalue@5.8.1"
+  # astro@6.3.3 and its transitive @astrojs/* deps published 2026-05-13/14 — just
+  # released at lockfile generation time (2026-05-15). Remove after 2026-05-21.
+  - "astro@6.3.3"
+
+# Block transitive deps from using git://, tarball, or GitHub shorthand URLs.
+# This is the direct mitigation for the Mini Shai-Hulud attack vector, where a
+# published package sneaks in a malicious GitHub repo via optionalDependencies.
+# Direct deps in your own package.json are still allowed to use exotic sources.
+blockExoticSubdeps: true
+
+# Fail installation if any dependency has an unreviewed lifecycle script
+# (preinstall / install / postinstall / prepare). Combined with allowBuilds below,
+# nothing runs at install time without explicit human sign-off.
+# To review and approve: run `pnpm approve-builds` interactively.
+strictDepBuilds: true
+
+# Per-package build-script allowlist (replaces pnpm 10's onlyBuiltDependencies).
+# Each entry is a deliberate decision: the maintainer and purpose of each script below
+# has been reviewed. Add new entries ONLY after running `pnpm approve-builds` interactively
+# and confirming the script is safe. Never use dangerouslyAllowAllBuilds.
+allowBuilds:
+  # esbuild — JavaScript bundler by Evan Wallace (Figma). Postinstall downloads the
+  # correct platform binary. 80M+ weekly downloads. Reviewed 2026-05-15.
+  esbuild: true
+  # sharp — image processing library by Lovell Fuller. Postinstall downloads libvips
+  # native bindings for the current platform. 10M+ weekly downloads. Reviewed 2026-05-15.
+  sharp: true
+
+# Fail installation if a package's OIDC provenance publisher has downgraded since the
+# last resolved version. Detects the Axios / North Korea credential-theft pattern where
+# an attacker hijacks a maintainer account and re-publishes under a different issuer.
+trustPolicy: no-downgrade
+
+# Skip trust checks for package versions older than N minutes (1 year = 525600).
+# Covers legitimate packages that lost provenance during major rewrites before OIDC
+# publishing was widespread (e.g. chokidar@4.x changed CI during its v4 rewrite).
+# This does NOT bypass checks for recently published versions — those are still enforced.
+trustPolicyIgnoreAfter: 525600
+
+# Verify that node_modules matches the lockfile before every pnpm run / pnpm exec.
+# Prevents scripts from running against a stale or tampered dependency tree.
+verifyDepsBeforeRun: install
+
+# ── Audit configuration ───────────────────────────────────────────────────────
+auditConfig:
+  # List GHSA advisory IDs here only for advisories you have reviewed and
+  # explicitly accepted (e.g. a dev-only dep with no realistic exploit path).
+  # Use the GHSA identifier — pnpm 11 dropped CVE-based filtering.
+  # Example: - GHSA-xxxx-xxxx-xxxx
+  ignoreGhsas: []

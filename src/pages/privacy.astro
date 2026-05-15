@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import personalData from '../data/personal.json';
+
+const currentYear = new Date().getFullYear();
+const title = `Privacy Policy | ${personalData.name}`;
+---
+
+<Layout title={title} description={`Privacy policy for ${personalData.name}'s portfolio website.`}>
+  <main id="main-content" class="policy-page">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl py-24">
+      <a href="/" class="back-link">← Back to portfolio</a>
+
+      <h1 class="text-3xl sm:text-4xl font-bold mt-8 mb-2 gradient-text">Privacy Policy</h1>
+      <p class="text-slate-500 text-sm mb-12">Last updated: January {currentYear}</p>
+
+      <div class="prose-section">
+        <h2>1. Information We Collect</h2>
+        <p>
+          This is a static portfolio website. We collect only information you voluntarily provide
+          through the contact form: your name, email address, and message content.
+        </p>
+        <p>
+          We do not use cookies, tracking pixels, or analytics scripts. We do not collect IP
+          addresses or browsing behaviour.
+        </p>
+
+        <h2>2. How We Use Your Information</h2>
+        <p>
+          Information submitted via the contact form is used solely to respond to your inquiry.
+          Contact form submissions are processed by
+          <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a> — their
+          <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">privacy policy</a>
+          governs that data.
+        </p>
+
+        <h2>3. Third-Party Services</h2>
+        <p>This site loads resources from the following third-party services:</p>
+        <ul>
+          <li>
+            <strong>Google Fonts</strong> — typography (Inter). Font files are cached locally at build
+            time and served from this domain. Requests reach <code>fonts.googleapis.com</code> only if
+            the local cache could not be built (e.g. no network access during the build).
+          </li>
+          <li>
+            <strong>Iconify</strong> — social icons loaded on demand from <code
+              >api.iconify.design</code
+            >.
+          </li>
+          <li><strong>Web3Forms</strong> — contact form submission endpoint.</li>
+        </ul>
+        <p>
+          Each of these services may log your IP address as part of normal server operation. Please
+          review their respective privacy policies for details.
+        </p>
+
+        <h2>4. Data Retention</h2>
+        <p>
+          We do not store any personal data on our own servers. Contact form data is retained by
+          Web3Forms per their policy.
+        </p>
+
+        <h2>5. Your Rights</h2>
+        <p>
+          You may request deletion of any contact form submission by emailing
+          <a href={`mailto:${personalData.email}`}>{personalData.email}</a>.
+        </p>
+
+        <h2>6. Changes to This Policy</h2>
+        <p>
+          This policy may be updated periodically. The date at the top of this page reflects the
+          most recent revision.
+        </p>
+
+        <h2>7. Contact</h2>
+        <p>
+          Privacy questions? Reach out at
+          <a href={`mailto:${personalData.email}`}>{personalData.email}</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .policy-page {
+    background-color: var(--bg);
+    min-height: 100vh;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .prose-section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 2rem 0 0.75rem;
+  }
+  .prose-section p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .prose-section ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .prose-section li {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 0.4rem;
+  }
+  .prose-section a {
+    color: var(--accent);
+    transition: opacity 0.2s ease;
+  }
+  .prose-section a:hover {
+    opacity: 0.8;
+  }
+  .prose-section code {
+    font-family: monospace;
+    font-size: 0.875em;
+    color: var(--text-dim);
+    background: var(--bg-card);
+    padding: 0.1em 0.35em;
+    border-radius: 0.25rem;
+  }
+</style>

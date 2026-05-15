@@ -1,0 +1,52 @@
+name: Build
+
+# Gitea Actions / Forgejo Actions / Codeberg CI
+#
+# This workflow builds the site on every push to main and uploads the output
+# as a downloadable artifact. There is no built-in Pages on generic Gitea or
+# Forgejo instances — download the artifact and rsync it to your server, or
+# use docker-compose locally (see README → Self-Hosted / VPS).
+#
+# Codeberg users: after the build succeeds, push dist/ to your `pages` branch
+# to publish at https://yourusername.codeberg.page — see README for details.
+
+on:
+  # Uncomment the lines below to automatically build on every push to main:
+  # push:
+  #   branches: [main]
+
+  # Manual trigger: run this workflow from the Actions tab → Run workflow in Gitea/Forgejo/Codeberg.
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          BASE_PATH: ${{ vars.BASE_PATH }}
+          GITHUB_USER: ${{ vars.GITHUB_USER }}
+          # Use GH_TOKEN (not GITHUB_TOKEN — that name is reserved for the
+          # Gitea/Forgejo instance token and cannot be overridden here).
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
