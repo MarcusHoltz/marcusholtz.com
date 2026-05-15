@@ -1,0 +1,287 @@
+---
+import expertiseFile from '../data/expertise.json';
+const servicesData = expertiseFile.items;
+---
+
+<section id="expertise" class="py-20" style="scroll-margin-top: 80px;">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <p class="text-sm font-semibold tracking-widest text-highlight uppercase mb-3">What I do</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold section-title">Expertise</h2>
+    </div>
+
+    <div class="services-grid max-w-5xl mx-auto">
+      {
+        servicesData.map((svc, i) => (
+          <div class="svc-card reveal" style={`transition-delay:${i * 0.08}s`}>
+            <div class="svc-inner">
+              <div class="svc-icon-box">
+                {svc.key === 'sysadmin' && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 6.9691309 9.5249417"
+                    class="svc-svg"
+                  >
+                    <defs>
+                      <linearGradient id="svc-g1" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="40%" stop-color="#818cf8" />
+                        <stop offset="60%" stop-color="#4f46e5" />
+                        <stop offset="100%" stop-color="#6366f1" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#svc-g1)"
+                      d="M5.63713 0 1.332.01.08328 1.6629h6.80258zM0 1.81902v1.60843h6.96913V1.81902zm1.38389.30782c.27424.00006.49654.22237.49661.49661-.00007.27425-.22237.49655-.49661.49661C1.10964 3.12.88733 2.8977.88727 2.62345c.00006-.27424.22237-.49655.49662-.49661zm2.99362.25899h1.60145c.085 0 .15348.0684.15348.15347 0 .085-.0684.15348-.15348.15348H4.37751c-.085 0-.15348-.0684-.15348-.15348 0-.085.0684-.15347.15348-.15347zm-3.00234.0196c-.117.005-.20941.10091-.20929.218-.00003.12041.0976.21803.21801.218.12041.00003.21803-.0976.218-.218.00003-.12042-.0976-.21803-.218-.218-.003-.00005-.006-.00005-.009 0zM0 3.61099v1.60843h6.96913V3.61099zm1.38389.30782c.27424.00006.49654.22236.49661.49661-.00007.27424-.22237.49654-.49661.49661-.27425-.00007-.49656-.22237-.49662-.49661.00006-.27425.22237-.49655.49662-.49661zm2.99362.25898h1.60145c.085 0 .15348.0684.15348.15348 0 .085-.0684.15347-.15348.15347H4.37751c-.085 0-.15348-.0684-.15348-.15347 0-.085.0684-.15348.15348-.15348zm-3.00234.0196c-.117.005-.20941.10092-.20929.21801-.00003.12041.0976.21803.21801.218.12041.00003.21803-.0976.218-.218.00003-.12042-.0976-.21803-.218-.21801-.003-.00005-.006-.00005-.009 0zM0 5.40295v1.60843h6.96913V5.40295Zm1.38389.30782c.27424.00006.49654.22237.49661.49662-.00007.27424-.22237.49654-.49661.49661-.27425-.00007-.49656-.22237-.49662-.49661.00006-.27425.22237-.49656.49662-.49662zm2.99362.25899h1.60145c.085 0 .15348.0684.15348.15348 0 .085-.0684.15347-.15348.15347H4.37751c-.085 0-.15348-.0684-.15348-.15347 0-.085.0684-.15348.15348-.15348zm-3.00234.0196c-.117.005-.20941.10091-.20929.21801-.00003.1204.0976.21802.21801.218.12041.00002.21803-.0976.218-.218.00003-.12042-.0976-.21803-.218-.21801-.003-.00005-.006-.00005-.009 0zm1.85826 1.22169v.75255h.50184v-.75255zm-.44604.91998v1.39391H4.1813V8.13103zm-2.75992.44603v.50185h2.56459v-.50185zm4.34873 0v.50185h2.56503v-.50185z"
+                    />
+                  </svg>
+                )}
+                {svc.key === 'webdev' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="svc-svg">
+                    <defs>
+                      <linearGradient id="svc-g2" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="40%" stop-color="#818cf8" />
+                        <stop offset="60%" stop-color="#4f46e5" />
+                        <stop offset="100%" stop-color="#6366f1" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#svc-g2)"
+                      d="M 80.000977,10 H 20.230469 c -2.934571,0 -5.321289,2.367188 -5.321289,5.276367 v 42.182678 l -4.861328,28.674744 c -0.1630863,0.958008 0.103515,1.935059 0.732422,2.680176 C 11.416992,89.567871 12.349609,90 13.34082,90 h 73.31836 c 0.985351,0 1.915039,-0.428711 2.550781,-1.175781 0.628906,-0.73877 0.901367,-1.709961 0.74707,-2.665039 L 85.322266,57.464355 V 15.276367 C 85.322266,12.367188 82.935547,10 80.000977,10 Z M 15.115356,68.210937 h 15.806153 l -0.767578,7.782715 H 13.795654 Z M 48.875,58.54541 v 7.665527 H 33.128357 l 0.756042,-7.665527 z m 2,0 h 14.990601 l 0.756042,7.665527 H 50.875 Z m -33.96582,-2 V 20.166504 H 83.322266 V 56.54541 Z m -0.154908,2 h 15.120545 l -0.756043,7.665527 H 15.454468 Z m 16.176819,9.665527 H 48.875 v 7.782715 H 32.163513 Z M 48.875,77.993652 V 88 H 30.979309 l 0.986939,-10.006348 z m 2,0 H 67.783752 L 68.770691,88 H 50.875 Z m 0,-2 v -7.782715 h 15.943909 l 0.767578,7.782715 z M 68.828491,68.210937 H 85.03186 l 1.25708,7.782715 H 69.596069 Z m -0.197265,-2 -0.756043,-7.665527 h 15.59552 l 1.238098,7.665527 z M 20.230469,12 h 59.770508 c 1.831054,0 3.321289,1.469727 3.321289,3.276367 v 2.890137 H 16.90918 V 15.276367 C 16.90918,13.469727 18.399414,12 20.230469,12 Z m -7.921875,75.523926 c -0.251953,-0.29834 -0.354492,-0.672852 -0.289063,-1.055664 l 1.437012,-8.47461 H 29.956665 L 28.969727,88 H 13.34082 c -0.40039,0 -0.776367,-0.173828 -1.032226,-0.476074 z m 75.378906,0.0039 C 87.431641,87.828125 87.057617,88 86.65918,88 H 70.780273 L 69.793335,77.993652 h 16.818603 l 1.370484,8.484864 c 0.06152,0.380859 -0.04297,0.753418 -0.294922,1.049316 z"
+                    />
+                    <path
+                      fill="url(#svc-g2)"
+                      d="m 44.287109,29.619629 c -0.178711,-0.30957 -0.508789,-0.5 -0.866211,-0.5 h -9.510742 c -0.357422,0 -0.6875,0.19043 -0.866211,0.5 l -4.754882,8.236328 c -0.178711,0.30957 -0.178711,0.69043 0,1 l 4.754882,8.236328 c 0.178711,0.30957 0.508789,0.5 0.866211,0.5 h 9.510742 c 0.357422,0 0.6875,-0.19043 0.866211,-0.5 l 4.754883,-8.236328 c 0.178711,-0.30957 0.178711,-0.69043 0,-1 z M 42.84375,45.592285 h -8.356445 l -4.177735,-7.236328 4.177735,-7.236328 h 8.356445 l 4.177734,7.236328 z"
+                    />
+                    <path
+                      fill="url(#svc-g2)"
+                      d="M 70.844727,29.119629 H 54.561523 c -0.552734,0 -1,0.447754 -1,1 v 16.472656 c 0,0.552246 0.447266,1 1,1 h 16.283204 c 0.552734,0 1,-0.447754 1,-1 V 30.119629 c 0,-0.552246 -0.447266,-1 -1,-1 z m -1,16.472656 H 55.561523 V 31.119629 h 14.283203 z"
+                    />
+                  </svg>
+                )}
+                {svc.key === 'freelance' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.5 113.4" class="svc-svg">
+                    <defs>
+                      <linearGradient id="svc-g3" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="40%" stop-color="#818cf8" />
+                        <stop offset="60%" stop-color="#4f46e5" />
+                        <stop offset="100%" stop-color="#6366f1" />
+                      </linearGradient>
+                    </defs>
+                    <g transform="translate(-26.73595,-26.385871)">
+                      <path
+                        fill="url(#svc-g3)"
+                        d="M41.9,138.6c-1.6-0.2-3.2-1.3-4.7-3.1c-1.1-1.3-1.4-1.9-2.1-3.5c-1-2.4-1.6-4.7-1.8-7.3c-0.2-2.2-0.2-3,0.3-7.7c0.7-7,2.2-12.8,4.6-18.8c4.2-10.2,11-18.6,19.1-23.6c1.7-1,3.4-2.4,3.8-2.4c4.6,9.8,9.6,19.9,14.6,29.8c5.1-9.4,9.4-19.4,14.6-29.5c0.1,0,0.7,0.4,1.8,1c13.1,7.1,22.6,22.1,25.3,39.7c1,6.3,1,11.3,0.3,14.8c-1,4.6-3.2,8.2-6,9.8c-1.8,1.1-0.3,1.1-36.1,1C57.6,138.7,42.4,138.6,41.9,138.6L41.9,138.6z M105.8,104.5H45.5c11,27.7,7.7,19.5,11,27.7h38.4C105.8,104.5,94.9,132.1,105.8,104.5z"
+                      />
+                      <path
+                        fill="url(#svc-g3)"
+                        d="M71.4,87.5l4.3-7.8l4.3,7.6c-0.6,3.6-2.2,5.6-4.3,8.9C73.7,93,71.9,90.9,71.4,87.5z"
+                      />
+                      <circle fill="url(#svc-g3)" cx="74.3" cy="50.4" r="18.4" />
+                      <path
+                        fill="url(#svc-g3)"
+                        d="M72.1,74.6l3.6-2.8c3.5,2.8,0,0,3.3,2.7l0.2,0.1c-0.7,2.3-1.9,2.9-3.4,4.1l-0.1,0.1C74,77.9,72.9,76.5,72.1,74.6z"
+                      />
+                    </g>
+                  </svg>
+                )}
+                {svc.key === 'leadership' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 82.428" class="svc-svg">
+                    <defs>
+                      <linearGradient id="svc-g4a" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="40%" stop-color="#818cf8" />
+                        <stop offset="60%" stop-color="#4f46e5" />
+                        <stop offset="100%" stop-color="#6366f1" />
+                      </linearGradient>
+                      <linearGradient id="svc-g4b" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#312e81" />
+                        <stop offset="100%" stop-color="#1e1b4b" />
+                      </linearGradient>
+                      <linearGradient id="svc-g4c" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3730a3" />
+                        <stop offset="100%" stop-color="#312e81" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#svc-g4b)"
+                      d="M90.702,27.135c-3.131,0-5.673,2.541-5.673,5.661c0,3.119,2.542,5.661,5.673,5.661c3.119,0,5.66-2.542,5.66-5.661C96.362,29.676,93.821,27.135,90.702,27.135z"
+                    />
+                    <path
+                      fill="url(#svc-g4b)"
+                      d="M9.31,27.135c-3.131,0-5.673,2.541-5.673,5.661c0,3.119,2.542,5.661,5.673,5.661c3.119,0,5.661-2.542,5.661-5.661C14.971,29.676,12.429,27.135,9.31,27.135z"
+                    />
+                    <path
+                      fill="url(#svc-g4c)"
+                      d="M73.853,16.837c-4.648,0-8.418,3.782-8.418,8.431c0,4.643,3.77,8.419,8.418,8.419c4.649,0,8.431-3.776,8.431-8.419C82.283,20.619,78.502,16.837,73.853,16.837z"
+                    />
+                    <path
+                      fill="url(#svc-g4b)"
+                      d="M100,68.071h-9.599V50.403c0-3.041-0.892-5.859-2.325-8.31c0.844-0.247,1.711-0.422,2.626-0.422c5.119,0,9.298,4.179,9.298,9.31V68.071z"
+                    />
+                    <path
+                      fill="url(#svc-g4c)"
+                      d="M26.147,16.837c-4.649,0-8.431,3.782-8.431,8.431c0,4.643,3.781,8.419,8.431,8.419c4.637,0,8.418-3.776,8.418-8.419C34.565,20.619,30.784,16.837,26.147,16.837z"
+                    />
+                    <path
+                      fill="url(#svc-g4b)"
+                      d="M9.31,41.671c0.915,0,1.771,0.175,2.613,0.422c-1.445,2.451-2.324,5.269-2.324,8.31v17.668H0v-17.09C0,45.851,4.179,41.671,9.31,41.671z"
+                    />
+                    <path
+                      fill="url(#svc-g4a)"
+                      d="M49.994,0c-6.865,0-12.453,5.588-12.453,12.453c0,6.871,5.588,12.465,12.453,12.465s12.465-5.594,12.465-12.465C62.459,5.588,56.859,0,49.994,0z"
+                    />
+                    <path
+                      fill="url(#svc-g4c)"
+                      d="M87.317,74.647H72.612V47.766c0-3.697-0.976-7.136-2.554-10.219c1.205-0.355,2.47-0.608,3.794-0.608c7.419,0,13.465,6.04,13.465,13.465V74.647z"
+                    />
+                    <path
+                      fill="url(#svc-g4c)"
+                      d="M27.376,47.766v26.882H12.682V50.403c0-7.425,6.034-13.465,13.465-13.465c1.324,0,2.577,0.253,3.781,0.608C28.352,40.63,27.376,44.068,27.376,47.766z"
+                    />
+                    <path
+                      fill="url(#svc-g4a)"
+                      d="M30.459,82.428h39.07V47.766c0-10.773-8.769-19.535-19.535-19.535c-10.779,0-19.535,8.762-19.535,19.535V82.428z"
+                    />
+                  </svg>
+                )}
+              </div>
+
+              <div class="svc-content">
+                <h3 class="svc-title">{svc.title}</h3>
+                <p class="svc-desc">{svc.description}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('#expertise .reveal').forEach((el) => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+  });
+</script>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .svc-card {
+    position: relative;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition:
+      border-color 0.3s ease,
+      transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.35s ease;
+  }
+  .svc-card:hover {
+    border-color: rgba(99, 102, 241, 0.45);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .svc-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: inherit;
+    background: transparent;
+    height: 100%;
+  }
+
+  .svc-icon-box {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    transition:
+      background 0.35s ease,
+      border-color 0.35s ease,
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 10px;
+  }
+  .svc-card:hover .svc-icon-box {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: rotate(-6deg) scale(1.1);
+  }
+
+  .svc-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .svc-card .svc-svg stop {
+    transition: stop-color 0.4s ease;
+  }
+  .svc-card:hover .svc-svg stop:first-child {
+    stop-color: #22d3ee;
+  }
+  .svc-card:hover .svc-svg stop:last-child {
+    stop-color: #c026d3;
+  }
+
+  .svc-content {
+    flex: 1;
+  }
+
+  .svc-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+    transition: color 0.3s ease;
+  }
+  .svc-card:hover .svc-title {
+    color: var(--accent);
+  }
+
+  .svc-desc {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+  }
+  .svc-card:hover .svc-desc {
+    color: var(--text);
+  }
+
+  :global([data-theme='light']) .svc-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  }
+  :global([data-theme='light']) .svc-card:hover .svc-desc {
+    color: var(--text-muted);
+  }
+</style>
